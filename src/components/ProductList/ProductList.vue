@@ -1,0 +1,70 @@
+<template>
+    <v-container>
+        <v-row>
+            <v-col v-for="(product,i) in products" :key="i">
+                <Product 
+                    :name="product.name"
+                    :desc="product.desc"
+                    :img="product.img"
+                    :price="product.price"
+                />
+            </v-col>
+        </v-row>
+    </v-container>
+</template>
+
+<script>
+    import Product from '../Product/Product.vue'
+    export default {
+        components: {
+            Product,
+        },
+        data() {
+            return {
+                products: [
+                    {
+                        name: "Receta de Flan de coco vegano", 
+                        desc: "Flan de coco vegano y sin cocción", 
+                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2Fflan%20de%20coco.jpg?alt=media&token=3b058e30-5c33-4ef4-9c25-61463df8371f",
+                        price: 10.3
+                    },
+
+                    {
+                        name: "Macarons veganos", 
+                        desc: "Pequeños alfajorcitos realizados con harina de almendras, pero que no lleva huevo", 
+                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FMacarons.jpg?alt=media&token=e9525394-b1e3-43f7-9bb3-71de703736b9",
+                        price: 11.3
+                    },
+                    {
+                        name: "Pan vegano de zapallo", 
+                        desc: "pan vegano de puré de zapallo", 
+                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPan.jpg?alt=media&token=75071aa2-bcea-48f8-b11f-de969e57f153",
+                        price: 11.2
+                    },
+                    {
+                        name: "Cookies de sésamo", 
+                        desc:"Galletitas de sésamo", 
+                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FCookies.jpg?alt=media&token=a8497290-b39b-4f47-bf67-8ade01efe472",
+                        price: 13.2
+                    }, 
+                    {
+                        name:"Pionono vegetariano",
+                        desc:"Pionono relleno salado",
+                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPionono.jpg?alt=media&token=39ba64ee-d7cb-4e5f-9d58-fca3ab8e61c0",
+                        price:10.2
+                    },
+                    {
+                        name:"Falafel vegano",
+                        desc:"Falafel vegano, comida tipica de Oriente Medio",
+                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FFalafel.jpg?alt=media&token=42786471-b8e0-4599-82a6-34c7db01cd56",
+                        price:10.2
+                    }
+                ]
+            }
+        },
+    }
+</script>
+
+<style scoped>
+
+</style>
