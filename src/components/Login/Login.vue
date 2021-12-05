@@ -125,6 +125,7 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+    
     .login-title {
       font-family: 'Architects Daughter', cursive;
       font-size: 150%

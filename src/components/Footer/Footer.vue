@@ -1,7 +1,7 @@
 <template>
     <v-footer color="#4E9F3D" dark class="mt-6">
         <v-container class="px-10 container-footer">
-            <h4 class="footer-title">Síguenos en nuestra redes</h4>
+            <h4 class="footer-title">Síguenos en nuestras redes</h4>
             <v-col class="items">
                 <v-row v-for="(red,i) in redes" :key="i">
                     <v-btn icon class="btn-icon">
@@ -33,7 +33,7 @@
 </script>
 
 <style scoped>
-    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Fredoka+One&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
     .container-footer{
         text-align: center;
     }
@@ -48,7 +48,7 @@
     }
 
     .footer-title {
-        font-family: 'Fredoka One', cursive;
+        font-family: 'Balsamiq Sans', cursive;
         font-size: 150%;
     }
 </style>
