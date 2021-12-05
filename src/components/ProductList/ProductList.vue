@@ -3,68 +3,108 @@
         <v-row>
             <v-col v-for="(product,i) in products" :key="i">
                 <Product 
-                    :name="product.name"
-                    :desc="product.desc"
-                    :img="product.img"
-                    :price="product.price"
+                    :product="product"
+                    @agregarAlCarrito="agregar($event)"
                 />
             </v-col>
         </v-row>
+        <div v-if="!estaVacio()" class="mt-6">
+            <h3 class="cart-title">Su carrito</h3>
+            <v-data-table :items="carrito" :headers="headers" hide-default-footer>
+                <template v-slot:item.delete="{ item }">
+                    <td>
+                        <v-btn icon @click="eliminar(item)">
+                            <v-icon>{{deleteIcon}}</v-icon>
+                        </v-btn>
+                    </td>
+                </template>    
+            </v-data-table>
+            <h4 class="total-title">Total: ${{calcularTotal|truncar}}</h4>
+        </div>
     </v-container>
 </template>
 
 <script>
     import Product from '../Product/Product.vue'
+    import products from '../../assets/data/products.json'
+    import headers from '../../assets/data/headers.json'
+    import { mdiDelete } from '@mdi/js';
     export default {
         components: {
             Product,
         },
+        methods: {
+            agregar(prod) {
+
+                const prodInCart =  this.carrito.find(item => item.name == prod.prod.name)
+                
+                if(prodInCart) {
+                    prodInCart.cant += prod.cant
+                    prodInCart.subTotal = Math.floor((prodInCart.cant*prodInCart.price)*10)/10
+                } else {
+                    const nuevoProducto = {
+                        name: prod.prod.name,
+                        desc: prod.prod.desc,
+                        price: prod.prod.price,
+                        cant: prod.cant,
+                        subTotal: Math.floor((prod.cant*prod.prod.price)*10)/10
+                }
+                this.carrito.push(nuevoProducto)
+                }
+            }, 
+
+            estaVacio() {
+                return this.carrito.length == 0
+            },
+
+            eliminar(item) {
+                this.carrito = this.carrito.filter(prod => prod.name != item.name)
+
+                this.actualizarStock(item, false)
+            },
+
+            actualizarStock() {
+                //todavia no implementado
+            }
+        },
+
+        computed: {
+            calcularTotal () {
+                const total = this.carrito.reduce((sumaTotal, prod) => {
+                    return prod.subTotal + sumaTotal
+                    }, 0)
+
+                return total
+            }
+        },
+
+        filters: {
+            truncar(value) {
+                return Math.floor(value*10)/10
+            }
+        },
+
         data() {
             return {
-                products: [
-                    {
-                        name: "Receta de Flan de coco vegano", 
-                        desc: "Flan de coco vegano y sin cocción", 
-                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2Fflan%20de%20coco.jpg?alt=media&token=3b058e30-5c33-4ef4-9c25-61463df8371f",
-                        price: 10.3
-                    },
-
-                    {
-                        name: "Macarons veganos", 
-                        desc: "Pequeños alfajorcitos realizados con harina de almendras, pero que no lleva huevo", 
-                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FMacarons.jpg?alt=media&token=e9525394-b1e3-43f7-9bb3-71de703736b9",
-                        price: 11.3
-                    },
-                    {
-                        name: "Pan vegano de zapallo", 
-                        desc: "pan vegano de puré de zapallo", 
-                        img: "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPan.jpg?alt=media&token=75071aa2-bcea-48f8-b11f-de969e57f153",
-                        price: 11.2
-                    },
-                    {
-                        name: "Cookies de sésamo", 
-                        desc:"Galletitas de sésamo", 
-                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FCookies.jpg?alt=media&token=a8497290-b39b-4f47-bf67-8ade01efe472",
-                        price: 13.2
-                    }, 
-                    {
-                        name:"Pionono vegetariano",
-                        desc:"Pionono relleno salado",
-                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPionono.jpg?alt=media&token=39ba64ee-d7cb-4e5f-9d58-fca3ab8e61c0",
-                        price:10.2
-                    },
-                    {
-                        name:"Falafel vegano",
-                        desc:"Falafel vegano, comida tipica de Oriente Medio",
-                        img:"https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FFalafel.jpg?alt=media&token=42786471-b8e0-4599-82a6-34c7db01cd56",
-                        price:10.2
-                    }
-                ]
+                headers: headers,
+                products: products,
+                carrito: [
+                ],
+                deleteIcon: mdiDelete 
             }
         },
     }
 </script>
 
 <style scoped>
+    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Fredoka+One&display=swap');
+    .cart-title{
+        text-align: center;
+        font-family: 'Fredoka One', cursive;
+    }
 
+    .total-title {
+        text-align: center;
+        color: #DD4A48;
+    }
 </style>

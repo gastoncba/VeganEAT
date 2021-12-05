@@ -1,0 +1,28 @@
+[
+  {
+    "text": "Nombre",
+    "value": "name",
+    "sortable": false
+  },
+  {
+    "text": "Cantidad",
+    "value": "cant",
+    "align": "center",
+    "sortable": false
+  },
+  {
+    "text": "Precio",
+    "value": "price",
+    "sortable": false
+  },
+  {
+    "text": "Total",
+    "value": "subTotal",
+    "sortable": false
+  },
+  {
+    "text": "Eliminar",
+    "value": "delete",
+    "sortable": false
+  }
+]

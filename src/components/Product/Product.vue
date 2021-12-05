@@ -4,12 +4,12 @@
     max-width="344"
   >
     <v-img
-      :src="img"
+      :src="product.img"
       height="200px"
     ></v-img>
 
     <v-card-title>
-      {{name}}
+      {{product.name}}
     </v-card-title>
 
     <v-card-actions>
@@ -35,9 +35,15 @@
         <v-divider></v-divider>
 
         <v-card-text>
-          {{desc}}
-          <p><b>Precio:</b> ${{price}}</p>
-          <v-btn color="#4E9F3D" dark>Agregar</v-btn>
+          {{product.desc}}
+          <p><b>Precio:</b> ${{product.price}}</p>
+          <div v-if="product.stock">
+          <v-btn color="#4E9F3D" dark @click="agregar()">Agregar</v-btn>
+          <v-btn icon @click="aumentar()"><v-icon>{{iconAdd}}</v-icon></v-btn>
+          <v-btn icon @click="disminuir()"><v-icon>{{iconRemove}}</v-icon></v-btn>
+          {{cant}}
+          </div>
+          <v-chip v-else color="red" dark>Sin Stock</v-chip>
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -45,33 +51,47 @@
 </template>
 
 <script>
+import { mdiPlusCircle } from '@mdi/js';
+import { mdiMinusCircle } from '@mdi/js';
     export default {
         props:{
-            name:{
-                type:String,
+            product: {
+              type: Object,
+              default: () => {} 
             },
-            desc: {
-                type:String
-            }, 
-            img: {
-                type:String
-            }, 
-            price: {
-                type: Number
-            }
         },
         methods: {
           agregar() {
-            
+            this.productAdd = {
+              prod: this.product,
+              cant: this.cant
+            }
+            this.$emit('agregarAlCarrito',this.productAdd)
           }, 
-          eliminar() {
-            
+          aumentar() {
+            if(this.cant < this.product.stock) {
+              this.cant += 1
+            } 
+          },
+          disminuir() {
+            if(this.cant != 1) {
+              this.cant -= 1
+            }
           }
         },
         data() {
             return {
-                show:false
+                iconAdd: mdiPlusCircle,
+                iconRemove: mdiMinusCircle,
+                show:false,
+                cant: 1, 
+                productAdd: {}
             }
+        },
+        watch: {
+          product() {
+            console.log(this.product)
+          }
         },
     }
 </script>
