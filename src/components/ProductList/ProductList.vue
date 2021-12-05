@@ -18,6 +18,9 @@
                         </v-btn>
                     </td>
                 </template>    
+                <template v-slot:item.subTotal="{item}">
+                    {{item.subTotal|truncar}}
+                </template>
             </v-data-table>
             <h4 class="total-title">Total: ${{calcularTotal|truncar}}</h4>
         </div>
@@ -47,7 +50,7 @@
                         desc: prod.prod.desc,
                         price: prod.prod.price,
                         cant: prod.cant,
-                        subTotal: Math.floor((prod.cant*prod.prod.price)*10)/10
+                        subTotal: prod.cant*prod.prod.price
                 }
                 this.carrito.push(nuevoProducto)
                 }
@@ -59,13 +62,15 @@
 
             eliminar(item) {
                 this.carrito = this.carrito.filter(prod => prod.name != item.name)
+                
+                this.products.forEach(p => {
+                    if(p.name == item.name) {
+                        p.stock += item.cant
+                        return 
+                    }
+                });
 
-                this.actualizarStock(item, false)
             },
-
-            actualizarStock() {
-                //todavia no implementado
-            }
         },
 
         computed: {

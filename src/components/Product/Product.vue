@@ -64,8 +64,11 @@ import { mdiMinusCircle } from '@mdi/js';
           agregar() {
             this.productAdd = {
               prod: this.product,
-              cant: this.cant
+              cant: this.cant,
             }
+            //update product stock
+            this.product.stock -= this.cant
+            this.cant = 1 
             this.$emit('agregarAlCarrito',this.productAdd)
           }, 
           aumentar() {
