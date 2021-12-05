@@ -32,7 +32,8 @@
               </v-col>
             </v-row>
             </v-form>
-            <p class="errorCartel mt-2" v-if="errorCartel">Email o Constraseña incorrecta</p>
+            <span>USUARIO: administrador y PASSWORD:12345</span>
+            <p class="errorCartel mt-2" v-if="errorCartel">Usuario o Constraseña incorrecta</p>
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -125,7 +126,7 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
-    
+
     .login-title {
       font-family: 'Architects Daughter', cursive;
       font-size: 150%
