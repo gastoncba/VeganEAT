@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row>
-            <v-col v-for="(product,i) in products" :key="i">
+            <v-col v-for="(product) in products" :key="product.id">
                 <Product 
                     :product="product"
                     @agregarAlCarrito="agregar($event)"
@@ -63,6 +63,7 @@
             eliminar(item) {
                 this.carrito = this.carrito.filter(prod => prod.name != item.name)
                 
+                //se actualiza stock
                 this.products.forEach(p => {
                     if(p.name == item.name) {
                         p.stock += item.cant

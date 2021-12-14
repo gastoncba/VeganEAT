@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "name": "Receta de Flan de coco vegano",
     "desc": "Flan de coco vegano y sin cocción",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2Fflan%20de%20coco.jpg?alt=media&token=3b058e30-5c33-4ef4-9c25-61463df8371f",
@@ -8,6 +9,7 @@
   },
 
   {
+    "id": 2,
     "name": "Macarons veganos",
     "desc": "Pequeños alfajorcitos realizados con harina de almendras, pero que no lleva huevo",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FMacarons.jpg?alt=media&token=e9525394-b1e3-43f7-9bb3-71de703736b9",
@@ -15,6 +17,7 @@
     "stock": 10
   },
   {
+    "id": 3,
     "name": "Pan vegano de zapallo",
     "desc": "pan vegano de puré de zapallo",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPan.jpg?alt=media&token=75071aa2-bcea-48f8-b11f-de969e57f153",
@@ -22,6 +25,7 @@
     "stock": 10
   },
   {
+    "id": 4,
     "name": "Cookies de sésamo",
     "desc": "Galletitas de sésamo",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FCookies.jpg?alt=media&token=a8497290-b39b-4f47-bf67-8ade01efe472",
@@ -29,6 +33,7 @@
     "stock": 10
   },
   {
+    "id": 5,
     "name": "Pionono vegetariano",
     "desc": "Pionono relleno salado",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FPionono.jpg?alt=media&token=39ba64ee-d7cb-4e5f-9d58-fca3ab8e61c0",
@@ -36,6 +41,7 @@
     "stock": 10
   },
   {
+    "id": 6,
     "name": "Falafel vegano",
     "desc": "Falafel vegano, comida tipica de Oriente Medio",
     "img": "https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2FFalafel.jpg?alt=media&token=42786471-b8e0-4599-82a6-34c7db01cd56",
