@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form ref="register" v-model="valid" lazy-validation>
+    <v-form ref="register" v-model="valid" lazy-validation class="mx-lg-auto col-lg-8 mx-xl-auto col-xl-8 mx-md-auto col-md-6">
       <h1 class="reg-title">Registro</h1>
           <v-text-field
               label="Nombre"
@@ -30,6 +30,7 @@
               label="Email"
               v-model="email"
               :rules="emailRules"
+              type="email"
               required
           ></v-text-field>
 
@@ -51,7 +52,7 @@
               <li>No espacios en blanco</li>
               <li>Al menos 1 caracter especial</li>
             </ul>
-      <p class="error-reg" v-if="usuarioRepetido">Nombre de usuario o Email ya registrado</p>
+      <p class="error-reg">{{error}}</p>
       <div>
         <v-btn color="#4E9F3D" dark @click="registrar()" class="mt-2 btn-reg">Registrarse</v-btn>
       </div>
@@ -64,69 +65,78 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         data() {
             return {
-                dialog: true,
-                newUser: {},
+              errorCartel: '', 
+              dialog: true,
 
-                //datos del form de registro
-                valid: true,
+              //datos del form de registro
+              valid: true,
 
-                name: '',
-                nameRules: [
-                  v => !!v || 'Nombre requerido',
-                  v => (v && v.length <= 15) || 'No mas de 15 caracteres' 
-                ],
+              name: '',
+              nameRules: [
+                v => !!v || 'Nombre requerido',
+                v => (v && v.length <= 15) || 'No mas de 15 caracteres' 
+              ],
 
-                lastName: '', 
-                lastNameRules: [
-                  v => !!v || 'Apellido requerido',
-                  v => (v && v.length <= 20) || 'No mas de 20 caracteres'
-                ],
+              lastName: '', 
+              lastNameRules: [
+                v => !!v || 'Apellido requerido',
+                v => (v && v.length <= 20) || 'No mas de 20 caracteres'
+              ],
 
-                nickname: '',
-                nicknameRules: [
-                    v => !!v || 'Nickname requerido',
-                    v => (v && v.length <= 15) || 'No mas de 15 caracteres'
-                ],
+              nickname: '',
+              nicknameRules: [
+                  v => !!v || 'Nickname requerido',
+                  v => (v && v.length <= 15) || 'No mas de 15 caracteres'
+              ],
 
-                email: '',
-                emailRules: [
-                    v => !!v || 'E-mail requerido',
-                    v => /.+@.+\..+/.test(v) || 'E-mail no valido'
-                ],
+              email: '',
+              emailRules: [
+                  v => !!v || 'E-mail requerido',
+                  v => /.+@.+\..+/.test(v) || 'E-mail no valido'
+              ],
 
-                password: '',
-                passwordRules: [
-                    v => !!v || 'Contraseña requerida',
-                    v=> /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/.test(v) || 'Password no valida'],
-            }
+              password: '',
+              passwordRules: [
+                  v => !!v || 'Contraseña requerida',
+                  v=> /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/.test(v) || 'Password no valida'],
+          }
         },
 
         methods: {
             registrar() {
                 if(this.$refs.register.validate()) {
-                    this.newUser = {
+                  
+                  const newUser = {
                     name: this.name,
                     lastName: this.lastName,
                     nickname: this.nickname,
                     email: this.email,
-                    pass: this.password
+                    password: this.password
                 }
-                //guardar nuevo usuario
-                }
+                axios.post('https://api-vegan-eat.herokuapp.com/api/register', newUser)
+                .then((response) => {
+                  console.log(response.data)
+                  this.$router.push('/')
+                })
+                .catch((error) => {
+                  console.log(error.response.data.error)
+                  this.errorCartel = error.response.data.error
+                })
+              }
             }, 
             cancelar() {
                 this.$router.push('/')
             }
         },
-        props: {
-            usuarioRepetido: {
-                type: Boolean,
-                default: false
-            },
-        },
+        computed: {
+          error() {
+            return this.errorCartel
+          }
+        }
     }
 </script>
 

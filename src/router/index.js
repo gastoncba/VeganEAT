@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: () => import('../views/Login/Login.vue')
   },
@@ -16,14 +16,24 @@ const routes = [
   }, 
 
   {
-    path: '/main', 
+    path: '/', 
     name: 'Main', 
     component: () => import('../views/Main/Main.vue')
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail', 
+    path: '/detail/:id',
+    name: 'Detail', 
     component: () => import('../views/Detail/Detail.vue')
+  },
+  {
+    path: '/carrito',
+    name: 'Cart',
+    component: () => import('../views/Cart/Cart.vue')
+  }, 
+  {
+    path: '/profile-admin',
+    name: 'Profile',
+    component: () => import('../views/profileAdmin/Admin.vue')
   }
 ]
 

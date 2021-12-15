@@ -1,6 +1,6 @@
 <template>
 <v-container>
-  <v-form ref="login" v-model="valid" lazy-validation>
+  <v-form ref="login" v-model="valid" lazy-validation class="mx-lg-auto col-lg-4 mx-xl-auto col-xl-6 mx-md-auto col-md-4">
     <h1 class="login-title">Iniciar Sesión</h1>
         <v-text-field
           label="Usuario"
@@ -16,8 +16,8 @@
           type="password"
           required
         ></v-text-field>
-
-    <p class="errorAlert" v-if="errorCartel">Usuario o Contraseña incorrecta</p>
+    <small>usuario: administrador y password: 123456</small>
+    <p class="alert">{{error}}</p>
     <div>
       <v-btn color="#4E9F3D" dark class="mt-2 btn-login" @click="iniciarSesion()">Iniciar Sesion</v-btn>
     </div>
@@ -31,12 +31,12 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         data: () => ({
       
             //cartel de aviso si se encontro usuario
-            errorCartel: false, 
-            //repetido: false,
+            errorCartel: '', 
 
             valid: true,
             nickname: '',
@@ -46,51 +46,40 @@
             password: '',
             passwordRules: [
                 v => !!v || 'Contraseña requerida'],
-            users: 
-            [
-              {
-                name: "Gastón",
-                lastName: "Barrionuevo",
-                nickname: "administrador",
-                email:"admin@gmail.com",
-                pass: "12345"
-              }
-            ]
-            }),
             
+            }),
+          
             methods: {
             iniciarSesion() {
                 if(this.$refs.login.validate()){
-                    this.users.forEach(user => {
-                      if(user.nickname == this.nickname && user.pass == this.password) {
-                        this.$router.push('/main')
-                        return
-                      }          
-                    })
-                    this.errorCartel = true; 
-                }
+                  
+                  const user = {
+                    nickname: this.nickname,
+                    password: this.password
+                  }
+
+                axios.post('https://api-vegan-eat.herokuapp.com/api/login', user)
+                .then((response) => {
+                  console.log(response.data)
+                  this.$router.push('/')
+                })
+                .catch((error) => {
+                  console.log(error.response.data.error)
+                  this.errorCartel = error.response.data.error
+                })
+                
+              }
             },
             registrarse() {
-              //vamos a la vista de registro
               this.$router.push("/register")
             }, 
-            sacarRegistro() {
-              this.stateRegister = false
-            }, 
-
-            agregar(user) {
-  
-              const estaUsuario = this.users.some(userReg => 
-                  (userReg.nickname == user.nickname || userReg.email == user.email)) 
-              if(!estaUsuario) {
-                this.users.push(user)
-                this.stateRegister = false
-                this.dialog = false
-              } else {
-                this.repetido = true
-              } 
-            }
-        }}
+        },
+        computed: {
+          error() {
+            return this.errorCartel 
+          },
+        },
+      }
 </script>
 
 <style scoped>
@@ -106,7 +95,8 @@
       width: 100%;
     }
 
-    .errorAlert {
+    .alert {
       color: red;
     }
+
 </style>

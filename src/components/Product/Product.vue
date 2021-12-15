@@ -21,8 +21,6 @@
 </template>
 
 <script>
-// import { mdiPlusCircle } from '@mdi/js';
-// import { mdiMinusCircle } from '@mdi/js';
     export default {
         props:{
             product: {
@@ -32,40 +30,10 @@
         },
         methods: { 
           verInfo() {
-            this.$router.push(`/productDetail/:${this.product.id}`)
-            //console.log(this.product.id)
+            this.$router.push(`/detail/${this.product._id}`)
+            console.log(this.product._id)
           }
         }
-        //   agregar() {
-        //     this.productAdd = {
-        //       prod: this.product,
-        //       cant: this.cant,
-        //     }
-        //     //update product stock
-        //     this.product.stock -= this.cant
-        //     this.cant = 1 
-        //     this.$emit('agregarAlCarrito',this.productAdd)
-        //   }, 
-        //   aumentar() {
-        //     if(this.cant < this.product.stock) {
-        //       this.cant += 1
-        //     } 
-        //   },
-        //   disminuir() {
-        //     if(this.cant != 1) {
-        //       this.cant -= 1
-        //     }
-        //   }
-        // },
-        // data() {
-        //     return {
-        //         // iconAdd: mdiPlusCircle,
-        //         // iconRemove: mdiMinusCircle,
-        //         // show:false,
-        //         // cant: 1, 
-        //         // productAdd: {}
-        //     }
-        // },
     }
 </script>
 
