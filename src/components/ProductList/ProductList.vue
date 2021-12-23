@@ -17,31 +17,20 @@
 
 <script>
     import Product from '../Product/Product.vue'
-    import axios from 'axios'
+    import {mapGetters} from 'vuex'
     export default {
         components: {
             Product,
         },
         methods: {
-
-            getProducts() {
-                axios.get('https://api-vegan-eat.herokuapp.com/api/products')
-                .then((response) => this.products = response.data )
-                .catch((error) => console.log(`error: ${error}`))
-            },
-            hayProductos() {
-                return this.products.length != 0
-            }
+          hayProductos() {
+              console.log(this.cant)
+              return this.cant !== 0
+          }
         },
 
-        data() {
-            return {
-                products: [], 
-            }
-        },
-
-        mounted () {
-            this.getProducts()
+        computed: {
+            ...mapGetters(['products','cant'])
         },
     }
 </script>
