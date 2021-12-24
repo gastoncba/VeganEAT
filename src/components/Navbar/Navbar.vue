@@ -14,7 +14,7 @@
       <v-spacer></v-spacer>
 
       <v-btn icon @click="administrador()">
-        <v-icon>{{admin}}</v-icon>
+        <v-icon>mdi-account-edit</v-icon>
       </v-btn>
 
       <v-menu
@@ -35,10 +35,10 @@
           <v-list-item v-for="(item, i) in items" :key="i" @click="() => {}">
             <v-list-item-title @click="goRoute(item)">
               <v-icon v-if="item.name == 'carrito'">
-                {{item.icon}}
+                mdi-cart
               </v-icon>
               <v-icon v-else>
-                {{item.icon}}
+                mdi-account
               </v-icon>
               {{item.name}}
             </v-list-item-title>
@@ -46,42 +46,45 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+    <Cart :stateCart="stateCart"/>
   </div>
 </template>
 
 <script>
+    import Cart from '../Cart/Cart.vue'
     import Logo from '../Logo/Logo.vue'
-    import { mdiAccount } from '@mdi/js'
-    import { mdiCart } from '@mdi/js';
-    import { mdiAccountEdit } from '@mdi/js';
     export default {
-    props: {
-        color: {
-            type: String,
-            default: "#4E9F3D"
+      props: {
+          color: {
+              type: String,
+              default: "#4E9F3D"
+          }
+      },
+      components: {
+        Logo, Cart
+      },
+      data: () => ({
+        items: [{name:'carrito'},
+                {name:'login'}
+              ],
+        stateCart: false 
+    }), 
+    methods: {
+      goRoute(item) {
+        if(item.name == 'login') {
+          this.$router.push(`/login`)
+        } else {
+          this.stateCart = true
         }
-    },
-    components: {
-      Logo
-    },
-    data: () => ({
-      items: [{name:'carrito', icon: mdiCart},
-              {name:'login', icon:mdiAccount}
-            ], 
-      admin: mdiAccountEdit
-  }), 
-  methods: {
-    goRoute(item) {
-      this.$router.push(`/${item.name}`)
-    },
-    irAPrincipal() {
-      this.$router.push('/')
-    },
+      },
+      irAPrincipal() {
+        this.$router.push('/')
+      },
 
-    administrador() {
-      this.$router.push('/profile-admin')
-    }
-  },
+      administrador() {
+        this.$router.push('/profile-admin')
+      }
+    },
   }
 </script>
 
