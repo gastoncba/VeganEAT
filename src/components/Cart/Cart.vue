@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="stateCart" width="470" persistent>
         <v-list>
-            <h1 class="title-cart">Tu Carrito</h1>
+            <h1 class="title-cart">Carrito</h1>
             <v-col>
                 <v-card class="mx-auto mb-10">
                     <v-img
@@ -47,18 +47,18 @@
                         </v-row>
                     </v-card-text>
                 </v-card>
-            </v-col>
-            <v-divider></v-divider>
-            <div class="total">Total: $100</div>
-            <div>
-                <v-btn color="red" dark>
-                <v-icon color="white">mdi-truck-delivery</v-icon>
-                realizar envio
-                 </v-btn>
-                <v-btn dark>
-                    salir
-                </v-btn>
+                <div class="total mb-2">Total: $400</div>
+                <div>
+                    <v-btn color="red" dark class="btn-cart">
+                    <v-icon color="white">mdi-truck-delivery</v-icon>
+                    realizar envio
+                    </v-btn>
+
+                    <v-btn dark class="btn-cart mt-2" @click="salir()">
+                        salir
+                    </v-btn>
             </div>
+            </v-col>
         </v-list>
     </v-dialog>
 </template>
@@ -71,11 +71,25 @@
                 default: false
             },
         },
+
+        methods: {
+            salir() {
+                this.$emit('salir')
+            }
+        },
     }
 </script>
 
 <style scoped>
     .title-cart, .total{
         text-align: center;
+    }
+
+    .total {
+        color: red
+    }
+
+    .btn-cart{
+        width: 100%;
     }
 </style>

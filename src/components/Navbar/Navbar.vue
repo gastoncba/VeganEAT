@@ -46,7 +46,7 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <Cart :stateCart="stateCart"/>
+    <Cart :stateCart="stateCart" @salir="salirDeVistaCarrito()"/>
   </div>
 </template>
 
@@ -83,6 +83,10 @@
 
       administrador() {
         this.$router.push('/profile-admin')
+      }, 
+
+      salirDeVistaCarrito() {
+        this.stateCart = false
       }
     },
   }
