@@ -56,6 +56,12 @@
     import {mapActions, mapGetters} from 'vuex'
     export default {
 
+        data() {
+            return {
+                initial: 1
+            }
+        },
+
         props: {
             dialog: {
                 type: Boolean,
@@ -71,11 +77,6 @@
                 type: Number,
                 default: 1
             }, 
-
-            initial: {
-                type: Number,
-                default: 1,
-            }
         },
 
         methods: {

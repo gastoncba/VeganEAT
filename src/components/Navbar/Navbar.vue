@@ -5,48 +5,77 @@
       dense
       dark
     >
-      <v-app-bar-nav-icon @click="irAPrincipal()">
-        <Logo />
-      </v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="state = !state"></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="main-title">VeganEAT! </v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/" style="color: white; text-decoration: none;">
+          <Logo />
+        </router-link>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon @click="administrador()">
         <v-icon>mdi-account-edit</v-icon>
       </v-btn>
-
-      <v-menu
-        left
-        bottom
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-            v-on="on"
-          >
-            <v-icon>mdi-menu</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="(item, i) in items" :key="i" @click="() => {}">
-            <v-list-item-title @click="goRoute(item)">
-              <v-icon v-if="item.name == 'carrito'">
-                mdi-cart
-              </v-icon>
-              <v-icon v-else>
-                mdi-account
-              </v-icon>
-              {{item.name}}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </v-app-bar>
-    <Cart :stateCart="stateCart" @salir="salirDeVistaCarrito()"/>
+
+    <v-navigation-drawer v-model="state" app temporary>
+            <v-list>
+              <v-list-item class="px-2">
+                <v-list-item-avatar>
+                  <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+                </v-list-item-avatar>
+              </v-list-item>
+
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title class="text-h6">
+                    Sandra Adams
+                  </v-list-item-title>
+                  <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+          </v-list>
+        <v-divider></v-divider>
+            <v-list nav dense>
+                <v-list-item-group  v-model="group" active-class="deep-purple--text text--accent-4">
+                
+                  <v-expansion-panels>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header hide-actions>
+                        <v-list-item>
+                        <div>
+                          <v-icon>mdi-cart</v-icon>
+                          carrito
+                        </div>
+                        </v-list-item>
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <Cart />
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+             
+                    <!-- <v-list-item>
+                        <v-list-item-icon>
+                            <v-icon>mdi-cart</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>carrito</v-list-item-title>
+                    </v-list-item> -->
+
+                    <router-link to="/perfil" style="color: white; text-decoration: none">
+                    <v-list-item>
+                        <div class="ml-6">
+                          <v-icon>mdi-account</v-icon>
+                          perfil
+                        </div>
+                    </v-list-item>
+                    </router-link>
+                    
+                </v-list-item-group>
+            </v-list>
+      </v-navigation-drawer>
   </div>
 </template>
 
@@ -63,12 +92,12 @@
       components: {
         Logo, Cart
       },
-      data: () => ({
-        items: [{name:'carrito'},
-                {name:'login'}
-              ],
-        stateCart: false 
-    }), 
+      data() {
+        return {
+          state: false,
+          group: null
+        }
+    }, 
     methods: {
       goRoute(item) {
         if(item.name == 'login') {
@@ -84,18 +113,10 @@
       administrador() {
         this.$router.push('/profile-admin')
       }, 
-
-      salirDeVistaCarrito() {
-        this.stateCart = false
-      }
     },
   }
 </script>
 
 <style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
-  .main-title {
-    font-family: 'Architects Daughter', cursive;
-    font-size: 200%;
-  }
+  
 </style>
