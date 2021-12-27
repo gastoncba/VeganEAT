@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-12">
     <v-form ref="register" v-model="valid" lazy-validation class="mx-lg-auto col-lg-8 mx-xl-auto col-xl-8 mx-md-auto col-md-6">
       <h1 class="reg-title">Registro</h1>
           <v-text-field

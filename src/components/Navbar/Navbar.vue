@@ -4,6 +4,7 @@
       :color="color"
       dense
       dark
+      fixed
     >
       <v-app-bar-nav-icon @click="state = !state"></v-app-bar-nav-icon>
 

@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container class="mt-10">
   <v-form ref="login" v-model="valid" lazy-validation class="mx-lg-auto col-lg-4 mx-xl-auto col-xl-6 mx-md-auto col-md-4">
     <h1 class="login-title">Iniciar Sesión</h1>
         <v-text-field
