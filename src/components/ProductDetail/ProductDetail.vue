@@ -8,18 +8,26 @@
             >
             </v-img>
             <v-card-text class="pt-6" style="position: relative;">
-            <v-btn v-if="stock"
-                absolute
-                color="#4E9F3D"
-                class="white--text"
-                fab
-                large
-                right
-                top
-                @click="agregarAlCarrito(product)"
-            >
-            <v-icon>mdi-cart</v-icon>
-            </v-btn>
+
+            <v-tooltip bottom v-if="stock">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        absolute
+                        color="#4E9F3D"
+                        class="white--text"
+                        fab
+                        large
+                        right
+                        top
+                        @click="agregarAlCarrito(product)"
+                    >
+                    <v-icon>mdi-cart</v-icon>
+                    </v-btn>
+                </template>
+                <span>Agregar!</span>
+            </v-tooltip>
             <v-chip v-else color="red" dark class="mb-2">sin stock</v-chip>
             <h3 class="text-h4 mb-2 name-title" style="color: #4E9F3D">
             {{product.name}}
@@ -48,6 +56,10 @@
                     cerrar
             </v-btn>
             </v-card-text>
+
+            <v-snackbar v-model="snackbar" :timeout="5000" color="success" centered>
+                <span>Listo! en tu carrito!</span>
+            </v-snackbar>
         </v-card>
     </v-dialog>
 </template>
@@ -58,7 +70,8 @@
 
         data() {
             return {
-                initial: 1
+                initial: 1,
+                snackbar: false
             }
         },
 
@@ -101,8 +114,15 @@
                     //El criterio que se utiliza es aumentar la cantidad para los repetidos
                     const repeated = this.carrito.find(item => item._id === prod._id)
                     repeated.cant += this.initial
+                    localStorage.setItem('cart', JSON.stringify(this.carrito))
                 }
-                this.volver()
+
+                setTimeout(() => {
+                    this.snackbar=true
+                    setTimeout(() => {
+                        this.volver()
+                    }, 1000);
+                }, 1000);
             },
 
             prodInCart(prodSelect) {

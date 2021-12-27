@@ -15,6 +15,17 @@
 
       <v-spacer></v-spacer>
 
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <router-link to="/register" style="color: white; text-decoration: none">
+            <v-btn icon v-bind="attrs" v-on="on">
+              <v-icon>mdi-account-plus</v-icon>
+            </v-btn>
+          </router-link>
+        </template>
+        <span>Registrarse</span>
+      </v-tooltip>
+
       <v-menu
         left
         bottom
@@ -30,14 +41,14 @@
         </template>
 
         <v-list>
-          <router-link to="/login" style="color: white; text-decoration: none">
+          <router-link to="/login" style="color: white; text-decoration: none" v-if="!user">
           <v-list-item>
             <v-icon>mdi-account</v-icon>
             <v-list-item-title class="ml-1">Log In</v-list-item-title>
           </v-list-item>
           </router-link>
           
-          <v-list-item>
+          <v-list-item @click="cerrarSesion()" v-else>
             <v-icon>mdi-arrow-left</v-icon>
             <v-list-item-title class="ml-1">Log Out</v-list-item-title>
           </v-list-item>
@@ -47,7 +58,7 @@
 
     <v-navigation-drawer v-model="state" app temporary>
             <v-list>
-              <v-list-item class="px-2">
+              <v-list-item class="px-2 ml-6">
                 <v-list-item-avatar>
                   <v-img src="https://semantic-ui.com/images/avatar2/large/matthew.png"></v-img>
                 </v-list-item-avatar>
@@ -61,6 +72,7 @@
                   <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
+
               <v-list-item v-else>
                 Hola! Bienvenid@!
               </v-list-item>
@@ -106,7 +118,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import Cart from '../Cart/Cart.vue'
     import Logo from '../Logo/Logo.vue'
     export default {
@@ -137,10 +149,20 @@
       estaVacio() {
         return this.cantCarrito == 0;
       },
+      
+      cerrarSesion() {
+        console.log('cerrando sesion...')
 
-      administrador() {
-        this.$router.push('/login')
+        this.setToken(null)
+        this.setUser(null)
+
+        localStorage.clear()
+
+        this.$router.push('/')
+
       }, 
+
+      ...mapActions(['setToken','setUser'])
     },
 
     computed: {

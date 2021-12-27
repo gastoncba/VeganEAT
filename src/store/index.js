@@ -29,6 +29,14 @@ export default new Vuex.Store({
 
     SET_USER(state, payload) {
       state.user = payload
+    }, 
+
+    SET_CART(state, payload) {
+      state.carrito = payload
+    }, 
+
+    CARGAR_CARRITO(state, payload) {
+      state.carrito = payload
     }
   },
   actions: {
@@ -50,6 +58,10 @@ export default new Vuex.Store({
 
     setUser({commit}, payload) {
       commit('SET_USER', payload)
+    }, 
+
+    cargarCarrito({commit}, payload) {
+      commit('CARGAR_CARRITO', payload)
     }
   },
 

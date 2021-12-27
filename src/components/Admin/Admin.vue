@@ -24,7 +24,7 @@
             <p>{{cartel}}</p>
             
             <v-container class="col-12" v-if="stateCRUD">
-                    <p class="text-center">{{title}}</p>
+                    <h2 class="text-center">{{title}}</h2>
                     <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
                     v-model="name"
@@ -181,7 +181,7 @@
                 this.limpiar()
                 this.habilitarCampos()
                 this.value = true
-                this.title = 'Agregar nuevo comida'
+                this.title = 'Agregar nueva comida'
                 this.confirm = ''
                 this.stateCRUD = true
                 this.action = 'agregar'
