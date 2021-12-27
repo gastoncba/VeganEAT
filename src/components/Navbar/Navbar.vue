@@ -87,9 +87,13 @@
                       <v-expansion-panel-header hide-actions>
                         <v-list-item>
                         <div>
-                          <v-icon>mdi-cart</v-icon>
+                          <v-icon v-if="estaVacio()">mdi-cart</v-icon>
+                          <v-badge :content="this.cantCarrito" color="deep-purple accent-4" v-else>
+                            <v-icon>mdi-cart</v-icon>
+                          </v-badge>
                           carrito
                         </div>
+                        <slot></slot>
                         </v-list-item>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content>
@@ -156,7 +160,8 @@
         this.setToken(null)
         this.setUser(null)
 
-        localStorage.clear()
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
 
         this.$router.push('/')
 

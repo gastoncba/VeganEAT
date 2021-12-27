@@ -108,13 +108,17 @@
 
             agregarAlCarrito(prod) {
                 if(!this.prodInCart(prod)) {
-                    const newProd = {...prod, cant: this.initial}
-                    this.agregar(newProd)
+                    this.agregar([...this.carrito, {...prod, cant: this.initial}])
                 } else {
                     //El criterio que se utiliza es aumentar la cantidad para los repetidos
-                    const repeated = this.carrito.find(item => item._id === prod._id)
-                    repeated.cant += this.initial
-                    localStorage.setItem('cart', JSON.stringify(this.carrito))
+                    const nuevoCarrito = this.carrito.map(item => {
+                        if(item._id === prod._id) {
+                            return {...item, cant: item.cant + this.initial}
+                        } else {
+                            return item
+                        }
+                    })
+                    this.agregar(nuevoCarrito)
                 }
 
                 setTimeout(() => {

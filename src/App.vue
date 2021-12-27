@@ -57,7 +57,6 @@
 
     watch: {
       carrito() {
-        console.log(this.carrito)
         localStorage.setItem('cart', JSON.stringify(this.carrito))
       }
     },

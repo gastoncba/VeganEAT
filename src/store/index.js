@@ -16,7 +16,7 @@ export default new Vuex.Store({
     },
 
     AGREGAR(state, payload) {
-      state.carrito.push(payload)
+      state.carrito = payload
     },
 
     ELIMINAR(state, payload) {
