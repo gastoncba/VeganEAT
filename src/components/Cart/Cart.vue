@@ -4,7 +4,7 @@
         <ItemCart :item="item"/>
     </div>
     <div class="total">
-            <p>TOTAL: $100</p>
+            <p>TOTAL: ${{total|truncar}}</p>
     </div>
     <div>
         <v-btn dark color="red">
@@ -21,12 +21,26 @@
     export default {
         
         computed: {
-            ...mapGetters(['carrito'])
+            ...mapGetters(['carrito']),
+
+            total() {
+                const total = this.carrito.reduce((sumaTotal, prod) => {
+                    return (prod.cant*prod.price) + sumaTotal
+                    }, 0)
+
+                return total
+            }
         },
 
         components: {
             ItemCart,
         },
+
+        filters: {
+            truncar(value) {
+                return Math.floor(value*10)/10
+            }
+        }
     }
 </script>
 

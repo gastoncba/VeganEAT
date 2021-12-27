@@ -24,13 +24,12 @@
         },
         methods: {
           hayProductos() {
-              console.log(this.cant)
-              return this.cant !== 0
+              return this.cantProducts !== 0
           }
         },
 
         computed: {
-            ...mapGetters(['products','cant'])
+            ...mapGetters(['products','cantProducts'])
         },
     }
 </script>

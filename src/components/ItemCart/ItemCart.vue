@@ -18,16 +18,34 @@
             <p>${{item.price*item.cant|truncar}}</p>
         </div>
         <v-divider></v-divider>
+        <div class="mt-2 mb-3">
+            <v-btn icon @click="eliminarDelCarrito(item)"><v-icon>mdi-delete</v-icon></v-btn>
+        </div>
     </div>
 </template>
 
 <script>
+    import {mapGetters, mapActions} from 'vuex'
     export default {
         props: {
             item: {
                 type: Object,
                 default: () => {}
             },
+        },
+
+        methods: {
+            ...mapActions(['eliminar']),
+
+            eliminarDelCarrito(item) {
+                const nuevocarrito = this.carrito.filter(prod => prod.name != item.name)
+                this.eliminar(nuevocarrito)
+            },
+
+        },
+
+        computed: {
+            ...mapGetters(['carrito'])
         },
 
         filters: {

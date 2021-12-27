@@ -31,13 +31,13 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex'
     import axios from 'axios'
     export default {
         data: () => ({
       
             //cartel de aviso si se encontro usuario
             errorCartel: '', 
-
             valid: true,
             nickname: '',
             nicknameRules: [
@@ -50,7 +50,8 @@
             }),
           
             methods: {
-            iniciarSesion() {
+            ...mapActions(['setToken','setUser']),
+            async iniciarSesion() {
                 if(this.$refs.login.validate()){
                   
                   const user = {
@@ -60,14 +61,19 @@
 
                 axios.post('https://api-vegan-eat.herokuapp.com/api/login', user)
                 .then((response) => {
-                  console.log(response.data)
+
+                  this.setToken(response.data.data.token)
+                  this.setUser(response.data.data.user)
+
+                  localStorage.setItem('token', response.data.data.token)
+                  localStorage.setItem('user', JSON.stringify(response.data.data.user))
+
                   this.$router.push('/')
                 })
                 .catch((error) => {
                   console.log(error.response.data.error)
                   this.errorCartel = error.response.data.error
                 })
-                
               }
             },
             registrarse() {

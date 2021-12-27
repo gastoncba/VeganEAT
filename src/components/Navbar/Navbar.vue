@@ -15,27 +15,56 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="administrador()">
-        <v-icon>mdi-account-edit</v-icon>
-      </v-btn>
+      <v-menu
+        left
+        bottom
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <router-link to="/login" style="color: white; text-decoration: none">
+          <v-list-item>
+            <v-icon>mdi-account</v-icon>
+            <v-list-item-title class="ml-1">Log In</v-list-item-title>
+          </v-list-item>
+          </router-link>
+          
+          <v-list-item>
+            <v-icon>mdi-arrow-left</v-icon>
+            <v-list-item-title class="ml-1">Log Out</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-navigation-drawer v-model="state" app temporary>
             <v-list>
               <v-list-item class="px-2">
                 <v-list-item-avatar>
-                  <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+                  <v-img src="https://semantic-ui.com/images/avatar2/large/matthew.png"></v-img>
                 </v-list-item-avatar>
               </v-list-item>
 
-              <v-list-item link>
+              <v-list-item link v-if="user">
                 <v-list-item-content>
                   <v-list-item-title class="text-h6">
-                    Sandra Adams
+                    {{user.name}}
                   </v-list-item-title>
-                  <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{user.email}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item v-else>
+                Hola! Bienvenid@!
+              </v-list-item>
+
           </v-list>
         <v-divider></v-divider>
             <v-list nav dense>
@@ -52,19 +81,16 @@
                         </v-list-item>
                       </v-expansion-panel-header>
                       <v-expansion-panel-content>
-                        <Cart />
+                        <Cart v-if="!estaVacio()"/>
+                        <div v-else class="empty-cart text-center">
+                            carrito vacio!
+                            <v-icon color="red" size=35>mdi-emoticon-sad</v-icon>
+                        </div>
                       </v-expansion-panel-content>
                     </v-expansion-panel>
                   </v-expansion-panels>
-             
-                    <!-- <v-list-item>
-                        <v-list-item-icon>
-                            <v-icon>mdi-cart</v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>carrito</v-list-item-title>
-                    </v-list-item> -->
 
-                    <router-link to="/perfil" style="color: white; text-decoration: none">
+                    <router-link to="/profile" style="color: white; text-decoration: none">
                     <v-list-item>
                         <div class="ml-6">
                           <v-icon>mdi-account</v-icon>
@@ -80,6 +106,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     import Cart from '../Cart/Cart.vue'
     import Logo from '../Logo/Logo.vue'
     export default {
@@ -106,17 +133,27 @@
           this.stateCart = true
         }
       },
-      irAPrincipal() {
-        this.$router.push('/')
+      
+      estaVacio() {
+        return this.cantCarrito == 0;
       },
 
       administrador() {
-        this.$router.push('/profile-admin')
+        this.$router.push('/login')
       }, 
+    },
+
+    computed: {
+      ...mapGetters(['cantCarrito','user'])
     },
   }
 </script>
 
 <style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Fredoka+One&display=swap');
+    .empty-cart{
+      color: red;
+      font-family: 'Fredoka One', cursive;
+    }
   
 </style>

@@ -1,7 +1,7 @@
 <template>
     <v-container>   
-        <h1>Perfil de Administrador</h1>
-        <h2>Comidas disponibles</h2>
+        <p class="text-center">Panel de modificación de Comidas</p>
+        <p class="text-center">Comidas disponibles</p>
         <v-data-table :items="products" :headers="cabeceras" hide-default-footer>
                 <template v-slot:item.delete="{ item }">
                     <td>
@@ -24,7 +24,7 @@
             <p>{{cartel}}</p>
             
             <v-container class="col-12" v-if="stateCRUD">
-                    <h3>{{title}}</h3>
+                    <p class="text-center">{{title}}</p>
                     <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
                     v-model="name"
@@ -85,6 +85,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     import axios from 'axios'
     import Confirm from '../../components/Confirm/Confirm.vue'
     export default {
@@ -243,8 +244,10 @@
             },
             ejecutar(action) {
 
+                    const headers = {'x-access-token': this.token}
+
                     if(action === 'agregar') {
-                        axios.post('https://api-vegan-eat.herokuapp.com/api/create', this.producto)
+                        axios.post('https://api-vegan-eat.herokuapp.com/api/create', this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
                         })
@@ -252,7 +255,7 @@
                             this.cartel = error.response.data.error})
                     } else {
                         if(action == 'modificar') {
-                        axios.put(`https://api-vegan-eat.herokuapp.com/api/update/${this.producto.id}`, this.producto)
+                        axios.put(`https://api-vegan-eat.herokuapp.com/api/update/${this.producto.id}`, this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
                         })
@@ -260,7 +263,7 @@
                             this.cartel = error.response.data.error})
                         } 
                         else {
-                            axios.delete(`https://api-vegan-eat.herokuapp.com/api/delete/${this.producto.id}`)
+                            axios.delete(`https://api-vegan-eat.herokuapp.com/api/delete/${this.producto.id}`, {headers: headers})
                             .then((response) => {
                                 this.cartel = response.data
                             })
@@ -304,6 +307,10 @@
             Confirm,
         },
 
+        computed: {
+            ...mapGetters(['token'])
+        },
+
         mounted () {
             this.getProducts();
         },
@@ -314,8 +321,6 @@
 </script>
 
 <style scoped>
-    h1, h2, h3 {
-        text-align: center;
-    }
+   
 
 </style>

@@ -66,6 +66,7 @@
 
 <script>
     import axios from 'axios'
+    import { mapActions } from 'vuex'
     export default {
         data() {
             return {
@@ -119,7 +120,15 @@
                 }
                 axios.post('https://api-vegan-eat.herokuapp.com/api/register', newUser)
                 .then((response) => {
-                  console.log(response.data)
+                  console.log(response.data.data.token)
+                  console.log(response.data.data.user)
+
+                  this.setToken(response.data.data.token)
+                  this.setUser(response.data.data.user)
+
+                  localStorage.setItem('token', response.data.data.token)
+                  localStorage.setItem('user', JSON.stringify(response.data.data.user))
+
                   this.$router.push('/')
                 })
                 .catch((error) => {
@@ -130,7 +139,9 @@
             }, 
             cancelar() {
                 this.$router.push('/')
-            }
+            },
+
+            ...mapActions(['setToken','setUser'])
         },
         computed: {
           error() {

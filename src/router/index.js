@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -21,21 +22,27 @@ const routes = [
     component: () => import('../views/Main/Main.vue')
   },
   {
-    path: '/carrito',
-    name: 'Cart',
-    component: () => import('../views/Cart/Cart.vue')
-  }, 
-  {
-    path: '/profile-admin',
+    path: '/profile',
     name: 'Profile',
-    component: () => import('../views/profileAdmin/Admin.vue')
-  }
+    component: () => import('../views/Profile/Profile.vue'),
+    meta: {esProtegida: true}
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const protegida = to.matched.some(item => item.meta.esProtegida)
+
+  if(protegida && store.state.token === null) {
+    next({name: 'Login'})
+  } else {
+    next()
+  }
 })
 
 export default router
