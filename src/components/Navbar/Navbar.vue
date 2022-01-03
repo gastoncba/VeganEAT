@@ -143,14 +143,6 @@
         }
     }, 
     methods: {
-      goRoute(item) {
-        if(item.name == 'login') {
-          this.$router.push(`/login`)
-        } else {
-          this.stateCart = true
-        }
-      },
-      
       estaVacio() {
         return this.cantCarrito == 0;
       },

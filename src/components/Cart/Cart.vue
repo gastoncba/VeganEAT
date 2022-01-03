@@ -7,10 +7,12 @@
             <p>TOTAL: ${{total|truncar}}</p>
     </div>
     <div>
-        <v-btn dark color="red">
-            <v-icon>mdi-truck-fast</v-icon>
-            <p class="ml-1 my-2">terminar pedido</p>
-        </v-btn>
+        <router-link to="/order" style="text-decoration: none; color: white;">
+            <v-btn dark color="red">
+                <v-icon>mdi-truck-fast</v-icon>
+                <p class="ml-1 my-2">terminar pedido</p>
+            </v-btn>
+        </router-link>
     </div>
     </div>
 </template>

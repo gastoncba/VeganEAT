@@ -27,6 +27,11 @@ const routes = [
     component: () => import('../views/Profile/Profile.vue'),
     meta: {esProtegida: true}
   },
+  {
+    path: '/order',
+    name: 'Order', 
+    component: () => import('../views/Order/Order.vue')
+  }
 ]
 
 const router = new VueRouter({
