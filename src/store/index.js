@@ -8,8 +8,9 @@ export default new Vuex.Store({
     products: [], 
     carrito: [],
     token: null,
-    user: null,
-    dataOrder: null
+    user: null, 
+    order: {},
+
   },
   mutations: {
     SET_PRODUCTS(state, paylaod) {
@@ -38,6 +39,10 @@ export default new Vuex.Store({
 
     CARGAR_CARRITO(state, payload) {
       state.carrito = payload
+    }, 
+
+    SET_ORDER(state, payload) {
+      state.order = payload
     }
   },
   actions: {
@@ -63,6 +68,10 @@ export default new Vuex.Store({
 
     cargarCarrito({commit}, payload) {
       commit('CARGAR_CARRITO', payload)
+    },
+
+    setOrder({commit}, payload) {
+      commit('SET_ORDER', payload)
     }
   },
 
@@ -73,7 +82,7 @@ export default new Vuex.Store({
     cantCarrito: (state) => state.carrito.length,
     user: (state) => state.user,
     token: (state) => state.token,
-    dataOrder: (state) => state.dataOrder
+    order: (state) => state.order
   },
 
   modules: {
