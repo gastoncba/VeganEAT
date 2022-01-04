@@ -1,5 +1,5 @@
 <template>
-    <v-containner class="mt-12">
+    <v-container class="mt-12">
         <v-row>
             <v-col class="col-sm-12 col-xs-12 col-12 col-lg-6 col-xl-6 col-xxl-6">
                 <StepOrder />
@@ -29,7 +29,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    </v-containner>
+    </v-container>
 </template>
 
 <script>
