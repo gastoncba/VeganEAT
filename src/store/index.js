@@ -8,7 +8,8 @@ export default new Vuex.Store({
     products: [], 
     carrito: [],
     token: null,
-    user: null
+    user: null,
+    dataOrder: null
   },
   mutations: {
     SET_PRODUCTS(state, paylaod) {
@@ -71,7 +72,8 @@ export default new Vuex.Store({
     carrito: (state) => state.carrito,
     cantCarrito: (state) => state.carrito.length,
     user: (state) => state.user,
-    token: (state) => state.token
+    token: (state) => state.token,
+    dataOrder: (state) => state.dataOrder
   },
 
   modules: {

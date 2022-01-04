@@ -78,6 +78,10 @@
             </v-stepper-step>
             <v-stepper-content step="3">
 
+                <div>
+                    <h3>Datos de entrega</h3>
+                </div>
+
                 <v-btn @click="step = 1" color="deep-purple accent-4" dark>
                     continuar
                 </v-btn>
@@ -95,6 +99,7 @@
 
 <script>
     import PayCard from '../PayCard/PayCard.vue'
+    import {mapGetters} from 'vuex'
     export default {
         data() {
             return {
@@ -172,6 +177,10 @@
 
         components: {
             PayCard,
+        },
+
+        computed: {
+            ...mapGetters(['dataOrder'])
         },
     }
 </script>
