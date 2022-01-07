@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-stepper vertical v-model="step">
-            <v-stepper-step step="1" :complete="step > 1" color="deep-purple accent-4">
+            <v-stepper-step step="1" :complete="step > 1" color="deep-purple">
                 Dirección de entrega
             </v-stepper-step>
                     
@@ -9,7 +9,7 @@
                 <Address @siguiente="siguiente($event)"/> 
             </v-stepper-content>
 
-            <v-stepper-step step="2" :complete="step > 2" color="deep-purple accent-4">
+            <v-stepper-step step="2" :complete="step > 2" color="deep-purple">
                 Forma de pago
             </v-stepper-step>
 
@@ -17,7 +17,7 @@
                 <PayOptions @siguiente="siguiente($event)" @volver="volver($event)"/>
             </v-stepper-content>
    
-            <v-stepper-step step="3" :complete="step > 3" color="deep-purple accent-4">
+            <v-stepper-step step="3" :complete="step > 3" color="deep-purple">
                     Confirmación
             </v-stepper-step>
 

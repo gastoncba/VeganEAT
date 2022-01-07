@@ -22,11 +22,11 @@
             <v-chip v-for="(hora,i) in horas" :key="i">{{hora}}</v-chip>
         </v-chip-group>
 
-        <v-btn @click="volver()" color="deep-purple accent-4" class="ml-4" text rounded>
+        <v-btn @click="volver()" color="deep-purple" text rounded>
             volver
         </v-btn>
         
-        <v-btn @click="step = 1" color="deep-purple accent-4" dark rounded>
+        <v-btn @click="step = 1" color="deep-purple" dark rounded class="ml-4">
             Pedir
         </v-btn>
     </div>

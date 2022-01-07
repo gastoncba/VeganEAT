@@ -3,13 +3,13 @@
         <v-radio-group v-model="tipoDePago">
             <v-radio v-for="(pago,i) in pagos" :key="i" :label="pago" :value="pago" @click="agregarTarjeta()" color="deep-purple accent-4"></v-radio>
         </v-radio-group>
-        
-        <v-btn @click="continuar()" color="deep-purple accent-4" dark>
-            continuar
+
+        <v-btn @click="volver()" color="deep-purple" text rounded>
+            volver
         </v-btn>
 
-        <v-btn @click="volver()" color="deep-purple accent-4" dark class="ml-4">
-            volver
+        <v-btn @click="continuar()" color="deep-purple" dark rounded class="ml-4"> 
+            continuar
         </v-btn>
 
         <PayCard :payCardState="ventanaTarjeta" @cerrar="cerrarVentanaTarjeta($event)"/>
