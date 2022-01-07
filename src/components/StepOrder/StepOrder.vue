@@ -32,6 +32,7 @@
     import Address from '../Address/Address.vue'
     import PayOptions from '../PayOptions/PayOptions.vue'
     import OrderDetail from '../OrderDetail/OrderDetail.vue'
+    import {mapGetters} from 'vuex'
     export default {
         data() {
             return {
@@ -54,7 +55,7 @@
         },
 
         computed: {
-            ...mapGetters(['dataOrder'])
+            ...mapGetters(['order'])
         },
     }
 </script>

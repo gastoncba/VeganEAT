@@ -7,6 +7,7 @@
     <v-img
       :src="product.img"
       height="200px"
+      width="100%"
     ></v-img>
 
     <v-card-title>

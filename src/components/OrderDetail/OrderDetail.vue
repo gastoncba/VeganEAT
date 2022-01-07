@@ -4,13 +4,10 @@
             <h3>Datos de Entrega</h3>
             <div>
                 <div class="text-subtitle-1">
-                    <b>Cuidad:</b> {{order.cuidad}}
+                    <b>Cuidad:</b> {{order.address1.cuidad}}
                 </div>
                 <div class="text-subtitle-1">
-                    <b>Calle:</b> {{order.calle}}
-                </div>
-                <div class="text-subtitle-1">
-                    <b>Número de puerta:</b> {{order.puerta}}
+                    <b>Calle:</b> {{order.address1.calle}} {{order.address1.nroCalle}}
                 </div>
                 <div class="text-subtitle-1">
                     <b>Telefono:</b> {{order.telefono}}
@@ -25,12 +22,12 @@
             <v-chip v-for="(hora,i) in horas" :key="i">{{hora}}</v-chip>
         </v-chip-group>
 
-        <v-btn @click="step = 1" color="deep-purple accent-4" dark>
-            Pedir
-        </v-btn>
-
-        <v-btn @click="volver()" color="deep-purple accent-4" dark class="ml-4">
+        <v-btn @click="volver()" color="deep-purple accent-4" class="ml-4" text rounded>
             volver
+        </v-btn>
+        
+        <v-btn @click="step = 1" color="deep-purple accent-4" dark rounded>
+            Pedir
         </v-btn>
     </div>
 </template>
