@@ -8,13 +8,40 @@
       :src="product.img"
       height="200px"
       width="100%"
-    ></v-img>
+    >
+      <div class="container-alert" v-if="!getStock(product)">
+        <div class="container-alert--triangle">
+          <div class="container-alert--text">
+            <p>Sin Stock</p>
+          </div>
+        </div>
+      </div>
+    </v-img>
 
     <v-card-title>
       {{product.name}}
     </v-card-title>
 
-    <v-card-text>
+    <v-card-text style="position: relative;">
+      <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              color="#4E9F3D"
+              class="white--text"
+              fab
+              small
+              right
+              absolute
+              :disabled="!getStock(product)"
+            >
+            <v-icon>mdi-cart</v-icon>
+            </v-btn>
+          </template>
+        <span>Agregar!</span>
+      </v-tooltip>
+      
       <v-row
         align="center"
         class="mx-0"
@@ -39,8 +66,8 @@
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="#4E9F3D" dark @click="verInfo()">
-        Ver Información
+      <v-btn color="#4E9F3D" dark @click="verInfo()" rounded>
+        Detalle
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -92,5 +119,28 @@
 </script>
 
 <style scoped>
+  .container-alert {
+    position: relative;
+  }
 
+  .container-alert--triangle{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0;
+    height: 0;
+    border-top: 100px solid purple;
+    border-right: 100px solid transparent;
+  }
+
+  .container-alert--text{
+    color: white;
+    position: absolute;
+    top: -100px;
+    left: 15px;
+    font-weight: bold;
+    padding:5px;
+    transform: rotate(-45deg);
+    font-size: 12px;
+  }
 </style>

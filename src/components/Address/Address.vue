@@ -1,6 +1,6 @@
 <template>
     <v-form lazy-validation v-model="valid" ref="form">
-                    <div class="address-container mb-0" ng-class="{'not-empty': address.length}">
+                    <div class="address-container mb-10">
                         <vue-google-autocomplete
                             ref="address"
                             id="map"
@@ -9,14 +9,10 @@
                             v-on:placechanged="getAddressData"
                             placeholder=""
                             country="ar"
-                            class="address-input py-1"
-                            ng-model="address"
+                            class="py-1"
                         >
                         </vue-google-autocomplete>
                         <label for="map" class="animated-label">Dirección 1 (*)</label>
-                    </div>
-                    <div class="message-address mb-10 mt-1">
-                            {{messageAddress}}
                     </div>
 
                     <v-text-field
@@ -37,7 +33,8 @@
                     
                     <v-text-field
                         v-model="infoExtra"
-                        label="Información extra (ej: casa de rejas negras..)"
+                        label="Información extra"
+                        hint="(ej: casa de rejas negras..)"
                     ></v-text-field> 
 
                     <v-btn color="deep-purple mt-2" dark @click="validarDireccion()" rounded>
@@ -55,12 +52,9 @@
                 valid: true,
                 messageAddress: '',
                 validAddress1: false,
-                address1: null,
+
+                address1: {},
                 address2: '',
-                
-                address2Rules: [
-                    v => !!v.trim() || 'Calle requerida' 
-                ],
 
                 nroDeTelefono: '',
                 nroDeTelefonoRules: [
@@ -73,9 +67,13 @@
 
         methods: {
             validarDireccion() {
-                if(!this.validAddress1) this.messageAddress = 'Ingrese una Dirección'
+                if(!this.validAddress1) {
+                    this.cssClases = {"error":true}
+                    this.validAddress1 = false
+                    this.messageAddress = 'Ingrese Calle y Número'
+                }
 
-                if(this.$refs.form.validate()){
+                if(this.$refs.form.validate() && this.validAddress1){
                     
                     const newOrder = {
                         address1: {
@@ -98,12 +96,11 @@
                 this.address1 = addressData
                 console.log(this.address1)
             },
+
             validateAddress() {
                 if(!this.address1.street_number || !this.address1.route || !this.address1.locality) {
-                    this.messageAddress = 'Ingrese Calle y Número'
                     this.validAddress1 = false
                 } else {
-                    this.messageAddress = ''
                     this.validAddress1 = true
                 }
             },
@@ -127,9 +124,12 @@
 </script>
 
 <style lang="scss" scoped>
-    #map {
-        width: 100%;
-        outline: none;
+
+    .hintMode {
+        color: rgba(0, 0, 0, 0.6);
+    }
+    .error {
+        color: red
     }
     // .detail {
     //     border-bottom: 1px solid rgb(179, 176, 176);
@@ -187,7 +187,7 @@
             z-index: 1;
             border-radius: 0;
             border-width: 0 0 1px;
-            border-bottom-color: rgba(0,0,0,0.25);
+            border-bottom-color: rgba(0,0,0,0.25) !important;
             height: auto;
             padding: 3px 0 5px;
             &:focus {
@@ -206,12 +206,6 @@
                 }
             }
         }
-    }
-
-
-    .message-address {
-        color: red;
-        font-size: 12px;
     }
     
 </style>

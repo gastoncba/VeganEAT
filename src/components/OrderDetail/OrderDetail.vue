@@ -2,7 +2,7 @@
     <div>
         <div class="text-center">
             <h3>Datos de Entrega</h3>
-            <div>
+            <div v-if="order">
                 <div class="text-subtitle-1">
                     <b>Cuidad:</b> {{order.address1.cuidad}}
                 </div>

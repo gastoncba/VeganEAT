@@ -9,7 +9,7 @@ export default new Vuex.Store({
     carrito: [],
     token: null,
     user: null, 
-    order: {},
+    order: null,
 
   },
   mutations: {
