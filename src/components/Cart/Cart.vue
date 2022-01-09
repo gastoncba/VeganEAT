@@ -1,16 +1,20 @@
 <template>
     <div>
-    <div v-for="(item) in carrito" :key="item._id">
-        <ItemCart :item="item"/>
-    </div>
+        <v-virtual-scroll :items="carrito" item-height="170" max-height="380" min-height="200">
+            <template v-slot:default="{ item }">
+                <v-container fluid>
+                <ItemCart :item="item"/>
+                </v-container>
+             </template>
+        </v-virtual-scroll>
     <div class="total">
             <p>TOTAL: ${{total|truncar}}</p>
     </div>
-    <div>
+    <div class="text-center">
         <router-link to="/order" style="text-decoration: none; color: white;">
             <v-btn dark color="red">
                 <v-icon>mdi-truck-fast</v-icon>
-                <p class="ml-1 my-2">terminar pedido</p>
+                <p class="my-2">terminar pedido</p>
             </v-btn>
         </router-link>
     </div>

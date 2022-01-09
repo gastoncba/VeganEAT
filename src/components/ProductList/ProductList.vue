@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row v-if="hayProductos()">
-            <v-col v-for="(product) in products" :key="product._id">
+            <v-col v-for="(product) in products" :key="product._id" sm="6" md="4" lg="4" cols="12">
                 <Product 
                     :product="product"
                 />

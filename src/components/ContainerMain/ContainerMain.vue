@@ -1,5 +1,5 @@
 <template>
-    <v-banner class="container-banner mx-0 mt-12" outlined>
+    <v-banner class="container-banner mx-4 mt-12" outlined>
         <h1 class="title-main my-6">{{title}}</h1>
         <h4 class="title-main">{{subTitle}}</h4>
     </v-banner>

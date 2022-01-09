@@ -6,6 +6,7 @@
       dark
       fixed
     >
+    <v-container style="display:flex;" fluid>
       <v-app-bar-nav-icon @click="state = !state"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
@@ -13,18 +14,18 @@
           <Logo />
         </router-link>
       </v-toolbar-title>
-
       <v-spacer></v-spacer>
 
       <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <router-link to="/register" style="color: white; text-decoration: none">
-            <v-btn icon v-bind="attrs" v-on="on">
-              <v-icon>mdi-account-plus</v-icon>
-            </v-btn>
-          </router-link>
+        <template v-slot:activator="{ on, attrs }"> 
+          <v-btn icon v-bind="attrs" v-on="on" @click="cartView = !cartView">
+            <v-icon v-if="estaVacio()">mdi-cart</v-icon>
+            <v-badge v-else :content="cantCarrito" color="deep-purple">
+              <v-icon>mdi-cart</v-icon>
+            </v-badge>
+          </v-btn>
         </template>
-        <span>Registrarse</span>
+        <span>Tu carrito!</span>
       </v-tooltip>
 
       <v-menu
@@ -45,18 +46,27 @@
           <router-link to="/login" style="color: white; text-decoration: none" v-if="!user">
           <v-list-item>
             <v-icon>mdi-account</v-icon>
-            <v-list-item-title class="ml-1">Log In</v-list-item-title>
+            <v-list-item-title class="ml-1">Iniciar sesion</v-list-item-title>
           </v-list-item>
           </router-link>
           
           <v-list-item @click="cerrarSesion()" v-else>
             <v-icon>mdi-arrow-left</v-icon>
-            <v-list-item-title class="ml-1">Log Out</v-list-item-title>
+            <v-list-item-title class="ml-1">Cerrar Sesion</v-list-item-title>
           </v-list-item>
+
+          <router-link to="/register" style="color: white; text-decoration: none">
+          <v-list-item>
+            <v-icon>mdi-account-plus</v-icon>
+            <v-list-item-title class="ml-1">Registrarse</v-list-item-title>
+          </v-list-item>
+          </router-link>
         </v-list>
       </v-menu>
+    </v-container> 
     </v-app-bar>
 
+    <!--vista de perfil-->
     <v-navigation-drawer v-model="state" app temporary>
             <v-list>
               <v-list-item class="px-2 ml-6">
@@ -83,7 +93,7 @@
             <v-list nav dense>
                 <v-list-item-group  v-model="group" active-class="deep-purple--text text--accent-4">
                 
-                  <v-expansion-panels>
+                  <!-- <v-expansion-panels>
                     <v-expansion-panel>
                       <v-expansion-panel-header hide-actions>
                         <v-list-item>
@@ -105,7 +115,7 @@
                         </div>
                       </v-expansion-panel-content>
                     </v-expansion-panel>
-                  </v-expansion-panels>
+                  </v-expansion-panels> -->
 
                     <router-link to="/profile" style="color: white; text-decoration: none">
                     <v-list-item>
@@ -118,6 +128,31 @@
                     
                 </v-list-item-group>
             </v-list>
+      </v-navigation-drawer>
+
+      <!--vista de caarrito-->
+      <v-navigation-drawer v-model="cartView" right app temporary width="300">
+        <v-list>
+          <v-list-item>
+            <v-list-item-title class="text-center">
+              Su carrito
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-container fluid>
+                <Cart v-if="!estaVacio()"/>
+                <div v-else class="empty-cart text-center">
+                  su carrito esta vacio!<br>
+                  <v-icon color="red" size=35>mdi-emoticon-sad</v-icon>
+                </div>
+              </v-container>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
   </div>
 </template>
@@ -139,7 +174,8 @@
       data() {
         return {
           state: false,
-          group: null
+          group: null,
+          cartView: false,
         }
     }, 
     methods: {
