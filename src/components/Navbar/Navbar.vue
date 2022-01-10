@@ -92,31 +92,6 @@
         <v-divider></v-divider>
             <v-list nav dense>
                 <v-list-item-group  v-model="group" active-class="deep-purple--text text--accent-4">
-                
-                  <!-- <v-expansion-panels>
-                    <v-expansion-panel>
-                      <v-expansion-panel-header hide-actions>
-                        <v-list-item>
-                        <div>
-                          <v-icon v-if="estaVacio()">mdi-cart</v-icon>
-                          <v-badge :content="this.cantCarrito" color="deep-purple accent-4" v-else>
-                            <v-icon>mdi-cart</v-icon>
-                          </v-badge>
-                          carrito
-                        </div>
-                        <slot></slot>
-                        </v-list-item>
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content>
-                        <Cart v-if="!estaVacio()"/>
-                        <div v-else class="empty-cart text-center">
-                            carrito vacio!
-                            <v-icon color="red" size=35>mdi-emoticon-sad</v-icon>
-                        </div>
-                      </v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels> -->
-
                     <router-link to="/profile" style="color: white; text-decoration: none">
                     <v-list-item>
                         <div class="ml-6">
@@ -133,8 +108,9 @@
       <!--vista de caarrito-->
       <v-navigation-drawer v-model="cartView" right app temporary width="300">
         <v-list>
+          
           <v-list-item>
-            <v-list-item-title class="text-center">
+            <v-list-item-title class="text-center cart-title">
               Su carrito
             </v-list-item-title>
           </v-list-item>
@@ -152,8 +128,21 @@
               </v-container>
             </v-list-item-content>
           </v-list-item>
+
         </v-list>
       </v-navigation-drawer>
+
+      <v-snackbar color="success" centered v-model="logOut" :timeout="5000">
+        <div class="log-out mt-1">
+          <div class="log-out-title">VeganEAT!</div>
+          <v-icon class="ml-1">mdi-food-apple</v-icon>
+        </div>
+        <v-divider class="mb-4"></v-divider>
+        <div class="text-center">
+          Hasta luego!!<br>
+          Nos vemos pronto!!
+        </div>
+      </v-snackbar>
   </div>
 </template>
 
@@ -176,6 +165,7 @@
           state: false,
           group: null,
           cartView: false,
+          logOut: false
         }
     }, 
     methods: {
@@ -184,7 +174,6 @@
       },
       
       cerrarSesion() {
-        console.log('cerrando sesion...')
 
         this.setToken(null)
         this.setUser(null)
@@ -192,7 +181,11 @@
         localStorage.removeItem('user')
         localStorage.removeItem('token')
 
-        this.$router.push('/')
+        this.logOut = true
+        setTimeout(()=> {
+          this.logOut = false
+          this.$router.push('/')
+        }, 6000)
 
       }, 
 
@@ -210,6 +203,20 @@
     .empty-cart{
       color: red;
       font-family: 'Fredoka One', cursive;
+    }
+
+    .cart-title {
+      font-family: 'Fredoka One', cursive;
+    }
+
+    .log-out {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      font-size: 160%;
+    }
+    .log-out-title {
+        font-family: 'Architects Daughter', cursive;
     }
   
 </style>

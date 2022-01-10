@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-virtual-scroll :items="carrito" item-height="170" max-height="380" min-height="200">
+        <v-virtual-scroll :items="carrito" item-height="170" max-height="350" min-height="200">
             <template v-slot:default="{ item }">
                 <v-container fluid>
                 <ItemCart :item="item"/>

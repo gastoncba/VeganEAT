@@ -1,15 +1,15 @@
 <template>
-    <v-form lazy-validation v-model="valid" ref="form">
+    <v-form lazy-validation v-model="valid" ref="form" class="address-form">
                     <div class="address-container mb-10">
                         <vue-google-autocomplete
                             ref="address"
                             id="map"
                             name="map"
                             classname="form-control"
+                            class="form-control py-1"
                             v-on:placechanged="getAddressData"
                             placeholder=""
                             country="ar"
-                            class="py-1"
                         >
                         </vue-google-autocomplete>
                         <label for="map" class="animated-label">Dirección 1 (*)</label>
@@ -143,69 +143,75 @@
     //     transition: border-bottom .1s;
     // } 
 
-    .address-container {
-        position: relative;
-        padding-top: 16px;
-        margin-bottom: 16px;
-        .animated-label {
-            position: absolute;
-            top: 20px;
-            left: 0;
-            bottom: 0;
-            z-index: 2;
-            width: 100%;
-            font-weight: 300;
-            opacity: 0.5;
-            cursor: text;
-            transition: 0.2s ease all;
-            margin: 0;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-            font-family: 'Roboto', sans-serif;
-            &:after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 45%;
-                height: 2px;
-                width: 10px;
-                visibility: hidden;
-                background-color:rgba(25,118,210);
-                transition: 0.2s ease all;
-            }  
-        } 
-        &.not-empty {
-            animated-label {
-                top: 0;
-                font-size: 12px;
-            }
-        }
-        
-        .form-control {
+    .address-form {
+
+        .address-container {
             position: relative;
-            z-index: 1;
-            border-radius: 0;
-            border-width: 0 0 1px;
-            border-bottom-color: rgba(0,0,0,0.25) !important;
-            height: auto;
-            padding: 3px 0 5px;
-            &:focus {
-                box-shadow: none;
-                border-bottom-color: rgba(0,0,0,0.12);
-                ~ .animated-label {
-                    top: 0;
-                    opacity: 1;
-                    color: rgba(25,118,210);
-                    font-size: 12px;
-                    &:after{
-                        visibility: visible;
-                        width: 100%;
-                        left: 0;
+            padding-top: 16px;
+            margin-bottom: 16px;
+            .animated-label {
+                position: absolute;
+                top: 20px;
+                left: 0;
+                bottom: 0;
+                z-index: 2;
+                width: 100%;
+                font-weight: 300;
+                opacity: 1;
+                cursor: text;
+                transition: 0.2s ease all;
+                margin: 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+                font-family: 'Roboto', sans-serif;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 45%;
+                    height: 2px;
+                    width: 10px;
+                    visibility: hidden;
+                    background-color:rgba(25,118,210);
+                    transition: 0.2s ease all;
+                }  
+            } 
+            // &.not-empty {
+            //     animated-label {
+            //         top: 0;
+            //         font-size: 12px;
+            //     }
+            // }
+            
+            .form-control {
+                width: 100%;
+                position: relative;
+                z-index: 1;
+                border-radius: 0;
+                border-width: 0 0 1px;
+                //border-bottom-color: rgba(0,0,0,0.25) !important;
+                border-bottom: 1px solid rgba(0,0,0,0.25)!important;
+                height: auto;
+                padding: 3px 0 5px;
+                outline: none;
+                &:focus {
+                    box-shadow: none;
+                    border-bottom-color: rgba(0,0,0,0.12);
+                    ~ .animated-label {
+                        top: 0;
+                        opacity: 1;
+                        color: rgba(25,118,210);
+                        font-size: 12px;
+                        &:after{
+                            visibility: visible;
+                            width: 100%;
+                            left: 0;
+                        }
                     }
                 }
             }
-        }
+        } 
     }
     
 </style>
