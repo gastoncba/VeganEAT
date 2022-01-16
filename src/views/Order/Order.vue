@@ -1,11 +1,11 @@
 <template>
     <v-container class="mt-12">
         <v-row>
-            <v-col class="col-sm-12 col-xs-12 col-12 col-lg-6 col-xl-6 col-xxl-6">
+            <v-col order="2" lg="6" md="6" cols="12" sm="6">
                 <StepOrder />
             </v-col>
 
-            <v-col class="col-sm-12 col-xs-12 col-12 col-lg-6 col-xl-6 col-xxl-6">
+            <v-col order="1" lg="6" md="6" cols="12" sm="6">
                 <v-card>
                     <v-card-text>
                     <div class="text-center row--title">

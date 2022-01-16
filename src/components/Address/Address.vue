@@ -1,6 +1,6 @@
 <template>
     <v-form lazy-validation v-model="valid" ref="form" class="address-form">
-                    <div class="address-container mb-10">
+                    <div class="address-container mb-0 pb-0">
                         <vue-google-autocomplete
                             ref="address"
                             id="map"
@@ -10,9 +10,15 @@
                             v-on:placechanged="getAddressData"
                             placeholder=""
                             country="ar"
+                            @focus="stateMsg = true"
+                            @blur="stateMsg = false"
                         >
                         </vue-google-autocomplete>
                         <label for="map" class="animated-label">Dirección 1 (*)</label>
+                    </div>
+                    <div class="msg-address" style="height: 45px;">
+                        <p v-if="stateMsg && !error" style="color: rgba(0, 0, 0, 0.6); font-size:12px">{{msg}}</p>
+                        <p v-else-if="error" style="color: red; font-size:12px">{{msg}}</p>
                     </div>
 
                     <v-text-field
@@ -50,7 +56,10 @@
         data() {
             return {
                 valid: true,
-                messageAddress: '',
+                msg: 'Calle y Número',
+                stateMsg: false,
+                error: false,
+
                 validAddress1: false,
 
                 address1: {},
@@ -68,9 +77,8 @@
         methods: {
             validarDireccion() {
                 if(!this.validAddress1) {
-                    this.cssClases = {"error":true}
-                    this.validAddress1 = false
-                    this.messageAddress = 'Ingrese Calle y Número'
+                    this.stateMsg = true;
+                    this.error = true
                 }
 
                 if(this.$refs.form.validate() && this.validAddress1){
@@ -87,7 +95,7 @@
                     }
                     
                     this.setOrder({...this.order, ...newOrder})
-
+                    this.error = false
                     this.$emit('siguiente', 2)
                 }
             },
@@ -100,8 +108,10 @@
             validateAddress() {
                 if(!this.address1.street_number || !this.address1.route || !this.address1.locality) {
                     this.validAddress1 = false
+                    this.error = true
                 } else {
                     this.validAddress1 = true
+                    this.error = false
                 }
             },
             ...mapActions(['setOrder'])
@@ -124,24 +134,20 @@
 </script>
 
 <style lang="scss" scoped>
-
-    .hintMode {
-        color: rgba(0, 0, 0, 0.6);
-    }
+    
     .error {
-        color: red
+        color: red;
+        font-size: 12px;
     }
-    // .detail {
-    //     border-bottom: 1px solid rgb(179, 176, 176);
-    //     transition: border-bottom .8s;
+    .msg {
+        color: rgba(0, 0, 0, 0.6); 
+        font-size: 12px;        
+    }
+   
+    // .form-control:hover {
+    //      border-bottom: 1px solid rgba(0, 0, 0, 0.87);
     // }
-    // #map:hover+.detail {
-    //     border-bottom: 1px solid rgba(0, 0, 0, 0.87);
-    // }
-    // #map:focus+.detail {
-    //     border-bottom: 2px solid rgba(25,118,210);
-    //     transition: border-bottom .1s;
-    // } 
+   
 
     .address-form {
 
@@ -190,7 +196,6 @@
                 z-index: 1;
                 border-radius: 0;
                 border-width: 0 0 1px;
-                //border-bottom-color: rgba(0,0,0,0.25) !important;
                 border-bottom: 1px solid rgba(0,0,0,0.25)!important;
                 height: auto;
                 padding: 3px 0 5px;
