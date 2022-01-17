@@ -102,7 +102,6 @@
             
             getAddressData(addressData) {
                 this.address1 = addressData
-                console.log(this.address1)
             },
 
             validateAddress() {

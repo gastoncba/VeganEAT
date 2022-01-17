@@ -26,20 +26,44 @@
             volver
         </v-btn>
         
-        <v-btn @click="step = 1" color="deep-purple" dark rounded class="ml-4">
+        <v-btn @click="stateConfirm = !stateConfirm" color="deep-purple" dark rounded class="ml-4">
             Pedir
         </v-btn>
+
+        <v-dialog v-model="stateConfirm" persistent max-width="290">
+            <v-card>
+                <v-card-title>
+                    Confirmación de compra
+                </v-card-title>
+                <v-card-text>
+                    Seguro que desea confirmar la compra?
+                </v-card-text>
+
+                <v-spacer></v-spacer>
+
+                <v-card-actions>
+                    <v-btn color="green" dark @click="terminarCompra()">
+                        Aceptar
+                    </v-btn>
+
+                    <v-btn color="green" text @click="stateConfirm = false">
+                        Cancelar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     export default {
 
         data() {
             return {
                 selection: 0,
                 horas: [],
+                stateConfirm: false
             }
         },
 
@@ -55,33 +79,57 @@
                 this.$emit('volver', 2)
             }, 
 
+            terminarCompra() {
+                if(this.selection === 0) {
+                    this.setOrder({...this.order, tiempoEntrega: 'Ahora'})
+                }
+                else {
+                    this.setOrder({...this.order, tiempoEntrega: this.horas[this.selection-1]})
+                }
+
+                this.stateConfirm = false
+                this.$emit('terminar', 4)
+            },
+
             cargarHoras() {
 
                 let mili = Date.now()
-                const incremento = 1_800_000
+                let i = 0
+
+                const incremento = 900_000
                 const fecha = new Date(mili)
-                const hora = fecha.getHours() + ':' + fecha.getMinutes()
+                let separador = ':'
+                let prefijo = ''
+                if(fecha.getMinutes() < 10) separador = ':0'
+                if(fecha.getHours() < 10) prefijo = '0'
+
+                const hora = prefijo + fecha.getHours() + separador + fecha.getMinutes()
                 this.horas.push(hora)
 
-                for (let i = 0; i < 5; i++) {
-
+                while(i < 5) {
+                    
                     const siguienteMili = mili + incremento
                     const siguienteFecha = new Date(siguienteMili)
-                    let separador = ':'
+                    
+                    separador = ':'
+                    prefijo = ''
+
                     if(siguienteFecha.getMinutes() < 10) separador = ':0'
-                    const siguienteHora = siguienteFecha.getHours() + separador + siguienteFecha.getMinutes()
-                    this.horas.push(siguienteHora)
+                    if(siguienteFecha.getHours() < 10) prefijo = '0'
 
+                    const siguienteHora = prefijo + siguienteFecha.getHours() + separador + siguienteFecha.getMinutes()
                     mili = siguienteMili
+
+                    if (siguienteFecha.getHours() <= 8) continue
+
+                    this.horas.push(siguienteHora)
+                    i++
                 }
-            }
+            }, 
+
+            ...mapActions(['setOrder'])
         },
 
-        filters: {
-            formatoHora(value) {
-                return value;
-            }
-        },
         mounted () {
             this.cargarHoras()
         },
