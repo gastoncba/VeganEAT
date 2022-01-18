@@ -68,7 +68,7 @@
         },
 
         computed: {
-            ...mapGetters(['order']),
+            ...mapGetters('orden', ['order']),
             verSelection() {
                 return this.selection
             }
@@ -127,7 +127,7 @@
                 }
             }, 
 
-            ...mapActions(['setOrder'])
+            ...mapActions('orden', ['setOrder'])
         },
 
         mounted () {

@@ -118,7 +118,7 @@
           agregarAlCarrito(prod) {
 
             if(!this.prodInCart(prod)) {
-              this.agregar([...this.carrito, {...prod, cant: this.cant}])
+              this.setCart([...this.carrito, {...prod, cant: this.cant}])
             } else {
               const nuevoCarrito = this.carrito.map(item => {
                 if(item._id === prod._id) {
@@ -127,7 +127,7 @@
                     return item
                 }
               })
-                this.agregar(nuevoCarrito)
+                this.setCart(nuevoCarrito)
             }
           },
 
@@ -135,12 +135,12 @@
                 return this.carrito.some(item => item._id === prodSelect._id)
           },
 
-          ...mapActions(['agregar'])
+          ...mapActions('carrito', ['setCart'])
         },
 
 
         computed: {
-          ...mapGetters(['carrito'])
+          ...mapGetters('carrito', ['carrito'])
         },
 
         components: {

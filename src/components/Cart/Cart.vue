@@ -27,7 +27,7 @@
     export default {
         
         computed: {
-            ...mapGetters(['carrito']),
+            ...mapGetters('carrito', ['carrito']),
 
             total() {
                 const total = this.carrito.reduce((sumaTotal, prod) => {

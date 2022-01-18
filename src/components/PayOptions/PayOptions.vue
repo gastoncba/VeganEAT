@@ -58,11 +58,11 @@
                 this.$emit('volver', 1)
             }, 
 
-            ...mapActions(['setOrder'])
+            ...mapActions('orden', ['setOrder'])
         },
 
         computed: {
-            ...mapGetters(['order'])
+            ...mapGetters('orden', ['order'])
         },
 
         components: {

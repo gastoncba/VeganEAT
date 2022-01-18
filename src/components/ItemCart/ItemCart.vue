@@ -35,17 +35,17 @@
         },
 
         methods: {
-            ...mapActions(['eliminar']),
+            ...mapActions('carrito', ['setCart']),
 
             eliminarDelCarrito(item) {
                 const nuevocarrito = this.carrito.filter(prod => prod.name != item.name)
-                this.eliminar(nuevocarrito)
+                this.setCart(nuevocarrito)
             },
 
         },
 
         computed: {
-            ...mapGetters(['carrito'])
+            ...mapGetters('carrito', ['carrito'])
         },
 
         filters: {

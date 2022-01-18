@@ -17,7 +17,9 @@
     },
 
     methods: {
-      ...mapActions(['setProducts', 'setToken', 'setUser', 'cargarCarrito']), 
+      ...mapActions(['setProducts']),
+      ...mapActions('carrito', ['setCart']),
+      ...mapActions('usuario', ['setUser', 'setToken']),
 
       leerToken() {
         if(localStorage.getItem('token')) this.setToken(localStorage.getItem('token'))
@@ -35,7 +37,7 @@
         if(localStorage.getItem('cart')) {
           const cartString = localStorage.getItem('cart') 
           const cart = JSON.parse(cartString)
-          this.cargarCarrito(cart)
+          this.setCart(cart)
         }
       },
 
@@ -47,7 +49,7 @@
     },
 
     computed: {
-      ...mapGetters(['token','user', 'carrito'])
+      ...mapGetters('carrito', ['carrito'])
     },
 
     mounted () {

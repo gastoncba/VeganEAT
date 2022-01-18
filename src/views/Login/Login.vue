@@ -76,7 +76,7 @@
             }),
           
             methods: {
-            ...mapActions(['setToken','setUser']),
+            ...mapActions('usuario', ['setToken','setUser']),
 
             async iniciarSesion() {
                 if(this.$refs.login.validate()){
@@ -117,7 +117,7 @@
         },
         computed: {
 
-          ...mapGetters(['user']),
+          ...mapGetters('usuario', ['user']),
 
           error() {
             return this.errorCartel 

@@ -189,11 +189,12 @@
 
       }, 
 
-      ...mapActions(['setToken','setUser'])
+      ...mapActions('usuario', ['setToken','setUser'])
     },
 
     computed: {
-      ...mapGetters(['cantCarrito','user'])
+      ...mapGetters('carrito', ['cantCarrito']),
+      ...mapGetters('usuario', ['user'])
     },
   }
 </script>

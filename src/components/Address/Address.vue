@@ -113,11 +113,11 @@
                     this.error = false
                 }
             },
-            ...mapActions(['setOrder'])
+            ...mapActions('orden', ['setOrder'])
         }, 
 
         computed: {
-            ...mapGetters(['order'])
+            ...mapGetters('orden', ['order'])
         },
 
         components: {

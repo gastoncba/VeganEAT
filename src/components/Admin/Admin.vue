@@ -318,7 +318,7 @@
         },
 
         computed: {
-            ...mapGetters(['token']),
+            ...mapGetters('usuario', ['token']),
 
             width () {
                 switch (this.$vuetify.breakpoint.name) {

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from '../store/index'
+import usuario from '../store/modules/User'
 
 Vue.use(VueRouter)
 
@@ -43,7 +43,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const protegida = to.matched.some(item => item.meta.esProtegida)
 
-  if(protegida && store.state.token === null) {
+  if(protegida && usuario.state.token === null) {
     next({name: 'Login'})
   } else {
     next()

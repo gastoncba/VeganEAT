@@ -77,7 +77,7 @@
         },
 
         computed: {
-            ...mapGetters(['order'])
+            ...mapGetters('orden', ['order'])
         },
     }
 </script>
