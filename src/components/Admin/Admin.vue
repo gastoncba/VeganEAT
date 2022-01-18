@@ -2,7 +2,10 @@
     <v-container>   
         <p class="text-center">Panel de modificación de Comidas</p>
         <p class="text-center">Comidas disponibles</p>
-        <v-data-table :items="products" :headers="cabeceras" hide-default-footer>
+        <v-progress-linear v-if="loading" indeterminate color="success">
+
+        </v-progress-linear>
+        <v-data-table :items="products" :headers="cabeceras" hide-default-footer v-else>
                 <template v-slot:item.delete="{ item }">
                     <td>
                         <v-btn icon @click="abrirFormDelete(item)">
@@ -23,7 +26,8 @@
             </div>
             <p>{{cartel}}</p>
             
-            <v-container class="col-12" v-if="stateCRUD">
+            <v-dialog v-model="stateCRUD" persistent :width="width">
+                <v-card class="col-lg-12">
                     <h2 class="text-center">{{title}}</h2>
                     <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
@@ -76,8 +80,9 @@
                     <v-btn color="error" class="mt-4 ml-4" @click="cancelar()">
                         Cancelar
                     </v-btn>
-                    </v-form>   
-        </v-container>
+                    </v-form>  
+                </v-card>
+            </v-dialog>
         
         <Confirm :operation="action" v-if="stateConfirm" @confirmacion="ejecutar($event)"/>
 
@@ -96,6 +101,7 @@
                 stateConfirm: false,
                 title: '',
                 cartel: '',
+                loading: true,
 
                 disableName: false,
                 disableDesc:false,
@@ -173,7 +179,11 @@
         methods: {
             getProducts() {
                 axios.get('https://api-vegan-eat.herokuapp.com/api/products')
-                .then((response) => this.products = response.data )
+                .then((response) => {
+                    this.products = response.data 
+                    this.loading = false
+                    
+                })
                 .catch((error) => console.log(`error: ${error}`))
             }, 
 
@@ -238,7 +248,6 @@
                     if(this.producto.price < 0) this.producto.price *=-1
                     if(this.producto.stock < 0) this.producto.stock *=-1
                     
-                    console.log(this.producto)
                     this.stateConfirm = true
                 } 
             },
@@ -300,7 +309,8 @@
                 this.disablePrice = true
                 this.disableStock = true
                 this.disableImg = true
-            }
+            },
+
         }, 
 
         components: {
@@ -308,7 +318,24 @@
         },
 
         computed: {
-            ...mapGetters(['token'])
+            ...mapGetters(['token']),
+
+            width () {
+                switch (this.$vuetify.breakpoint.name) {
+                    case 'xs': 
+                        return "100vw"
+                    case 'sm': 
+                        return "100vw"
+                    case 'md': 
+                        return "100vw"
+                    case 'lg': 
+                        return "50vw"
+                    case 'xl': 
+                        return "50vw"
+                    default: 
+                        return "50vw"
+                }
+            },
         },
 
         mounted () {
@@ -321,6 +348,5 @@
 </script>
 
 <style scoped>
-   
-
+    
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-12">
+    <div class="mt-12" v-if="user">
         <h1 class="text-center">Buenos Días!</h1>
         <h2 class="text-center">{{user.nickname}}</h2>
 

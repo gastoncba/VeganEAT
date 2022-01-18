@@ -47,8 +47,8 @@
                     <b>Cantidad para llevar: </b>{{initial}}
                 </div>
                 <div class="selector-cant--buttons">
-                    <v-btn icon color="#4E9F3D" @click="aumentar()"><v-icon size=30>mdi-plus-circle</v-icon></v-btn>
-                    <v-btn icon color="#4E9F3D" @click="disminuir()"><v-icon size=30>mdi-minus-circle</v-icon></v-btn>
+                    <v-btn color="#4E9F3D" @click="aumentar()" fab x-small class="white--text"><v-icon>mdi-plus</v-icon></v-btn>
+                    <v-btn color="#4E9F3D" @click="disminuir()" fab x-small class="white--text ml-1"><v-icon>mdi-minus</v-icon></v-btn>
                 </div>
             </div>
 

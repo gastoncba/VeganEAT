@@ -35,6 +35,7 @@
               right
               absolute
               :disabled="!getStock(product)"
+              @click="agregarAlCarrito(product)"
             >
             <v-icon>mdi-cart</v-icon>
             </v-btn>
@@ -64,6 +65,9 @@
       <div class="mt-4 text-subtitle-1">
         $ • {{product.price}} ARS
       </div>
+
+      <ItemCount :stock="getStock(product)" @aumentar="tomarCantidad($event)" @disminuir="tomarCantidad($event)"/>
+
     </v-card-text>
     <v-card-actions>
       <v-btn color="#4E9F3D" dark @click="verInfo()" rounded>
@@ -77,13 +81,15 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import ProductDetail from '../ProductDetail/ProductDetail.vue'
+    import ItemCount from '../ItemCount/ItemCount.vue'
     export default {
 
         data() {
           return {
-            detail: false
+            detail: false,
+            cant: 1
           }
         },
 
@@ -104,7 +110,32 @@
           getStock(prod) {
             const prodInCart =  this.carrito.find(item => item._id === prod._id);
             return prodInCart ? (prod.stock - prodInCart.cant) : prod.stock;
-          }
+          }, 
+
+          tomarCantidad(value) {
+            this.cant = value
+          },
+          agregarAlCarrito(prod) {
+
+            if(!this.prodInCart(prod)) {
+              this.agregar([...this.carrito, {...prod, cant: this.cant}])
+            } else {
+              const nuevoCarrito = this.carrito.map(item => {
+                if(item._id === prod._id) {
+                  return {...item, cant: item.cant + this.cant}
+                } else {
+                    return item
+                }
+              })
+                this.agregar(nuevoCarrito)
+            }
+          },
+
+          prodInCart(prodSelect) {
+                return this.carrito.some(item => item._id === prodSelect._id)
+          },
+
+          ...mapActions(['agregar'])
         },
 
 
@@ -113,7 +144,7 @@
         },
 
         components: {
-          ProductDetail,
+          ProductDetail, ItemCount
         },
     }
 </script>
