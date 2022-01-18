@@ -33,7 +33,7 @@
             </div>
             <v-divider></v-divider>
             <div class="text-center mt-4">
-                Muchas Gracias por hacer la compra!!
+                Muchas Gracias su compra!!
             </div>
         </v-snackbar>
     </div>
@@ -43,7 +43,7 @@
     import Address from '../Address/Address.vue'
     import PayOptions from '../PayOptions/PayOptions.vue'
     import OrderDetail from '../OrderDetail/OrderDetail.vue'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     export default {
         data() {
             return {
@@ -61,15 +61,23 @@
                 this.step = step;
             },
 
+            limpiarCarrito() {
+                this.setCart([])
+                localStorage.removeItem('cart')
+            },
+
             terminar(step) {
                 this.siguiente(step)
                 this.cartelAcept = true
 
                 setTimeout(() => {
                     this.cartelAcept = false
+                    this.limpiarCarrito()
                     this.$router.push('/')
                 }, 6000)
-            }
+            }, 
+
+            ...mapActions('carrito', ['setCart'])
         },
 
         components: {

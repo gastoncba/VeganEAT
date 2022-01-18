@@ -20,7 +20,7 @@
         <template v-slot:activator="{ on, attrs }"> 
           <v-btn icon v-bind="attrs" v-on="on" @click="cartView = !cartView">
             <v-icon v-if="estaVacio()">mdi-cart</v-icon>
-            <v-badge v-else :content="cantCarrito" color="deep-purple">
+            <v-badge v-else :content="prodPorCantidad" color="deep-purple">
               <v-icon>mdi-cart</v-icon>
             </v-badge>
           </v-btn>
@@ -193,8 +193,15 @@
     },
 
     computed: {
-      ...mapGetters('carrito', ['cantCarrito']),
-      ...mapGetters('usuario', ['user'])
+      ...mapGetters('carrito', ['cantCarrito', 'carrito']),
+      ...mapGetters('usuario', ['user']),
+
+      prodPorCantidad() {
+        const cantProd = this.carrito.reduce((sumaTotal, prod) => {
+          return prod.cant + sumaTotal
+          }, 0)
+        return cantProd
+      }
     },
   }
 </script>

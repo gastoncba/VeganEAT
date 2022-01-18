@@ -58,7 +58,10 @@
             </v-card-text>
 
             <v-snackbar v-model="snackbar" :timeout="5000" color="success" centered>
-                <span>Listo! en tu carrito!</span>
+                <div class="text-center">
+                    Listo! en su carrito!
+                    <v-icon class="ml-2">mdi-check</v-icon>
+                </div>
             </v-snackbar>
         </v-card>
     </v-dialog>

@@ -1,5 +1,11 @@
 <template>
     <v-container>
+      <v-snackbar color="success" centered :timeout="3000" v-model="snackbar">
+        <div class="text-center">
+          Listo! en su carrito!
+          <v-icon class="ml-2">mdi-check</v-icon>
+        </div>
+      </v-snackbar>
     <v-card
     class="mx-auto"
     max-width="344"
@@ -89,7 +95,8 @@
         data() {
           return {
             detail: false,
-            cant: 1
+            cant: 1,
+            snackbar: false,
           }
         },
 
@@ -129,6 +136,8 @@
               })
                 this.setCart(nuevoCarrito)
             }
+
+            this.snackbar = true
           },
 
           prodInCart(prodSelect) {
