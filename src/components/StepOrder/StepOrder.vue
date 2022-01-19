@@ -33,7 +33,8 @@
             </div>
             <v-divider></v-divider>
             <div class="text-center mt-4">
-                Muchas Gracias su compra!!
+                Muchas Gracias su compra!!<br>
+                {{msgEntrega}}
             </div>
         </v-snackbar>
     </div>
@@ -44,11 +45,13 @@
     import PayOptions from '../PayOptions/PayOptions.vue'
     import OrderDetail from '../OrderDetail/OrderDetail.vue'
     import {mapGetters, mapActions} from 'vuex'
+    import axios from 'axios'
     export default {
         data() {
             return {
                 step: 1,
-                cartelAcept: false
+                cartelAcept: false,
+                msgEntrega: 'En unos momentos llegara a su domicilio!'
             }
         },
 
@@ -68,16 +71,28 @@
 
             terminar(step) {
                 this.siguiente(step)
-                this.cartelAcept = true
 
-                setTimeout(() => {
-                    this.cartelAcept = false
-                    this.limpiarCarrito()
-                    this.$router.push('/')
-                }, 6000)
+                if(this.order.tiempoEntrega !== 'Ahora') this.msgEntrega = `su pedido estara a las ${this.order.tiempoEntrega} hs`
+                
+                this.cartelAcept = true
+                this.setOrder({...this.order, entregado: false})
+
+                axios.post('https://api-vegan-eat.herokuapp.com/api/orders/create', this.order)
+                .then((response) => {
+                    console.log(response.data)
+                    setTimeout(()=>{
+                        this.cartelAcept = false
+                        this.limpiarCarrito()
+                        this.$router.push('/')
+                    }, 6000)
+                })
+                .catch((error)=>{
+                    console.log(error.response.data.error)
+                })
             }, 
 
-            ...mapActions('carrito', ['setCart'])
+            ...mapActions('carrito', ['setCart']),
+            ...mapActions('orden', ['setOrder'])
         },
 
         components: {

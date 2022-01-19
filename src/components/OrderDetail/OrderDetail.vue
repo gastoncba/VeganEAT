@@ -12,6 +12,12 @@
                 <div class="text-subtitle-1">
                     <b>Telefono:</b> {{order.telefono}}
                 </div>
+                <div class="text-subtitle-1" v-if="order.address2">
+                    <b>Piso y Departamento:</b> {{order.address2}}
+                </div>
+                <div class="text-subtitle-1" v-if="order.infoExtra">
+                    <b>Información extra:</b> {{order.infoExtra}}
+                </div>
             </div>
         </div>
 

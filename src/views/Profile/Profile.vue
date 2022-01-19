@@ -7,6 +7,7 @@
         por el momento aca se lo hace por nickname pero despues se va a cambiar-->
         <Admin v-if="user.nickname == 'administrador'" />
 
+
     </div>
 </template>
 

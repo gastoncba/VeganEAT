@@ -118,7 +118,7 @@
                     email: this.email,
                     password: this.password
                 }
-                axios.post('https://api-vegan-eat.herokuapp.com/api/register', newUser)
+                axios.post('https://api-vegan-eat.herokuapp.com/api/auth/register', newUser)
                 .then((response) => {
                   console.log(response.data.data.token)
                   console.log(response.data.data.user)

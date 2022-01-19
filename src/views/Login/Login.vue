@@ -89,7 +89,7 @@
                     password: this.password
                   }
 
-                axios.post('https://api-vegan-eat.herokuapp.com/api/login', user)
+                axios.post('https://api-vegan-eat.herokuapp.com/api/auth/login', user)
                 .then((response) => {
 
                   this.setToken(response.data.data.token)

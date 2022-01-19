@@ -89,12 +89,14 @@
                             calle: this.address1.route,
                             nroCalle: this.address1.street_number,
                         }, 
-                        address2: this.address2,
                         telefono: this.nroDeTelefono,
-                        infoExtra: this.infoExtra
                     }
                     
-                    this.setOrder({...this.order, ...newOrder})
+                    if(this.address2 !== '') newOrder.address2 = this.address2
+
+                    if(this.infoExtra !== '') newOrder.infoExtra = this.infoExtra
+
+                    this.setOrder(newOrder)
                     this.error = false
                     this.$emit('siguiente', 2)
                 }

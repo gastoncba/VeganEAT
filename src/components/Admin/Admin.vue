@@ -256,7 +256,7 @@
                     const headers = {'x-access-token': this.token}
 
                     if(action === 'agregar') {
-                        axios.post('https://api-vegan-eat.herokuapp.com/api/create', this.producto, {headers: headers})
+                        axios.post('https://api-vegan-eat.herokuapp.com/api/products/create', this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
                         })
@@ -264,7 +264,7 @@
                             this.cartel = error.response.data.error})
                     } else {
                         if(action == 'modificar') {
-                        axios.put(`https://api-vegan-eat.herokuapp.com/api/update/${this.producto.id}`, this.producto, {headers: headers})
+                        axios.put(`https://api-vegan-eat.herokuapp.com/api/products/update/${this.producto.id}`, this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
                         })
@@ -272,7 +272,7 @@
                             this.cartel = error.response.data.error})
                         } 
                         else {
-                            axios.delete(`https://api-vegan-eat.herokuapp.com/api/delete/${this.producto.id}`, {headers: headers})
+                            axios.delete(`https://api-vegan-eat.herokuapp.com/api/products/delete/${this.producto.id}`, {headers: headers})
                             .then((response) => {
                                 this.cartel = response.data
                             })
