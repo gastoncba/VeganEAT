@@ -15,12 +15,14 @@
                     <v-card-title>Comidas disponibles</v-card-title>
                     </v-img>
                     <v-card-actions>
+                        <router-link to="/admin-foods" style="text-decoration: none">
                         <v-btn outlined
                                 rounded
                                 small
                         >
                         ir al panel
                         </v-btn>
+                        </router-link>
                     </v-card-actions>
                 </v-card>
             </v-col> 
@@ -100,9 +102,6 @@
                     }
                 ]
             }
-        },
-        components: {
-            
         },
     }
 </script>

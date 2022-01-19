@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid>   
-        <p class="text-center">Comidas disponibles</p>
+    <v-container class="mt-12">   
+        <h1 class="text-center">Comidas disponibles</h1>
         <v-progress-linear v-if="loading" indeterminate color="success">
 
         </v-progress-linear>
@@ -91,7 +91,7 @@
 <script>
     import {mapGetters} from 'vuex'
     import axios from 'axios'
-    import Confirm from '../Confirm/Confirm.vue'
+    import Confirm from '../../components/Confirm/Confirm.vue'
     export default {
         data() {
             return {
@@ -347,5 +347,11 @@
 </script>
 
 <style scoped>
+
+    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Fredoka+One&display=swap');
     
+    h1 {
+        font-family: 'Fredoka One', cursive;
+        font-size: 2em;
+    }
 </style>

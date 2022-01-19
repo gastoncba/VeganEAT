@@ -15,7 +15,6 @@ const routes = [
     name: 'Register',
     component: () => import('../views/Register/Register.vue')
   }, 
-
   {
     path: '/', 
     name: 'Main', 
@@ -31,6 +30,18 @@ const routes = [
     path: '/order',
     name: 'Order', 
     component: () => import('../views/Order/Order.vue')
+  },
+  {
+    path: '/admin-foods',
+    name: 'AdminFoods',
+    component: () => import('../views/TableFood/TableFood.vue'),
+    meta: {esProtegida: true}
+  }, 
+  {
+    path: '/admin-orders',
+    name: 'AdminOrders',
+    component: () => import('../views/TableOrder/TableOrder.vue'),
+    meta: {esProtegida: true}
   }
 ]
 
