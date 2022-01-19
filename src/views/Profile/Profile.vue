@@ -4,7 +4,7 @@
         <h2 class="text-center">{{user.nickname}}</h2>
 
         <!--aca se hace un condicional para verificar los roles del usuario
-        por el momento aca se lo hace por nickname pero despues se va a cambiar-->
+        por el momento aca se lo hace por nickname pero despues se va a cambiar--->
         <Admin v-if="user.nickname == 'administrador'" />
 
 
@@ -20,7 +20,7 @@
         },
 
         components: {
-            Admin,
+            Admin
         },
     }
 </script>
