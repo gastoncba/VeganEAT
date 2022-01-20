@@ -1,7 +1,6 @@
 <template>
     <div class="mt-12" v-if="user">
-        <h1 class="text-center">Buenos Días!</h1>
-        <h2 class="text-center">{{user.nickname}}</h2>
+        <h1 class="text-center">Buenos días {{user.nickname}}!</h1>
 
         <!--aca se hace un condicional para verificar los roles del usuario
         por el momento aca se lo hace por nickname pero despues se va a cambiar--->

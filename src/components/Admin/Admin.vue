@@ -2,7 +2,7 @@
     <div>
         <v-row>
             <v-col lg="6" sm="12" md="12" cols="12" class="d-flex justify-center">
-                <v-card class="ml-4">
+                <v-card>
                     <v-card-title>
                         Panel de Comidas
                     </v-card-title>
@@ -47,25 +47,34 @@
                                             <v-card-subtitle>{{item.subtitle}}</v-card-subtitle>
 
                                             <v-card-actions>
+                                                <router-link 
+                                                to="/"
+                                                v-if="item.title == 'Usuarios'" 
+                                                style="text-decoration: none;"
+                                                >
                                                 <v-btn
                                                 class="ml-2 mt-5 mb-2"
                                                 outlined
                                                 rounded
                                                 small
-                                                v-if="item.title == 'Usuarios'"
                                                 >
                                                 ver usuarios
                                                 </v-btn>
+                                                </router-link>
 
+                                                <router-link 
+                                                v-else
+                                                to="/admin-orders" 
+                                                style="text-decoration: none">
                                                 <v-btn
                                                 class="ml-2 mt-5 mb-2"
                                                 outlined
                                                 rounded
                                                 small
-                                                v-else
                                                 >
                                                 ver pedidos
                                                 </v-btn>
+                                                </router-link>
 
                                             </v-card-actions>
                                             
