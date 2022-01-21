@@ -8,13 +8,13 @@
                             classname="form-control"
                             class="form-control py-1"
                             v-on:placechanged="getAddressData"
-                            placeholder=""
+                            placeholder="Dirección 1 (*)"
                             country="ar"
                             @focus="stateMsg = true"
                             @blur="stateMsg = false"
                         >
                         </vue-google-autocomplete>
-                        <label for="map" class="animated-label">Dirección 1 (*)</label>
+                        <label for="map" class="animated-label"></label>
                     </div>
                     <div class="msg-address" style="height: 45px;">
                         <p v-if="stateMsg && !error" style="color: rgba(0, 0, 0, 0.6); font-size:12px">{{msg}}</p>
@@ -23,7 +23,7 @@
 
                     <v-text-field
                         v-model="address2"
-                        label="Direccion 2"
+                        label="Dirección 2"
                         hint="Piso y Departamento"
                         class="mb-6"
                     ></v-text-field>
@@ -144,11 +144,6 @@
         color: rgba(0, 0, 0, 0.6); 
         font-size: 12px;        
     }
-   
-    // .form-control:hover {
-    //      border-bottom: 1px solid rgba(0, 0, 0, 0.87);
-    // }
-   
 
     .address-form {
 
@@ -171,25 +166,22 @@
                 -webkit-user-select: none;
                 -moz-user-select: none;
                 user-select: none;
-                font-family: 'Roboto', sans-serif;
                 &:after {
                     content: '';
                     position: absolute;
                     bottom: 0;
                     left: 45%;
-                    height: 2px;
+                    height: 2px; 
                     width: 10px;
                     visibility: hidden;
                     background-color:rgba(25,118,210);
                     transition: 0.2s ease all;
-                }  
-            } 
-            &.not-empty {
-                animated-label {
-                    top: 0;
-                    font-size: 12px;
                 }
-            }
+                &:hover{
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+                    transition: 0.2s ease all;
+                }   
+            } 
             
             .form-control {
                 width: 100%;

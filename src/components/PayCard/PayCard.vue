@@ -88,7 +88,7 @@
                 cvc: '',
                 cvcRules: [
                     v => !!v || 'CVC requerido',
-                    v => /^([0-9]|[0-9]|[0-9])/.test(v) || 'CVC invalido no valido'
+                    v => /^[0-9]{3,4}$/.test(v) || 'CVC invalido no valido'
                 ],
                 month: '',
                 months: ['01', '02', '03', '04', '05', '06', '07' ,'08', '09', '10', '11', '12'],
@@ -122,7 +122,6 @@
                     this.loadingCard = true
                     this.validado = true
                     this.procesarPago()
-                    console.log(this.validado)
                     setTimeout(() => {
                         this.cerrar()
                         this.validado = false
