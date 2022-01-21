@@ -10,7 +10,7 @@
             <v-spacer></v-spacer>
 
             <v-card-actions>
-                <v-btn color="green darken-1" text @click="aceptar()">
+                <v-btn color="green darken-1" dark @click="aceptar()">
                     aceptar
                 </v-btn>
 

@@ -28,14 +28,6 @@
         
         computed: {
             ...mapGetters('carrito', ['carrito', 'total']),
-
-            // total() {
-            //     const total = this.carrito.reduce((sumaTotal, prod) => {
-            //         return (prod.cant*prod.price) + sumaTotal
-            //         }, 0)
-
-            //     return total
-            // }
         },
 
         components: {

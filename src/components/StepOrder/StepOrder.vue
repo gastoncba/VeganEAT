@@ -51,7 +51,8 @@
             return {
                 step: 1,
                 cartelAcept: false,
-                msgEntrega: 'En unos momentos llegara a su domicilio!'
+                msgEntrega: 'En unos momentos llegara a su domicilio!',
+                prodComprados: []
             }
         },
 
@@ -82,7 +83,19 @@
                 if(this.order.tiempoEntrega !== 'Ahora') this.msgEntrega = `su pedido estara a las ${this.order.tiempoEntrega} hs`
                 
                 this.cartelAcept = true
-                this.setOrder({...this.order, entregado: false, monto: this.totalPagar})
+
+                this.carrito.forEach(element => {
+                    const prodComprado = {
+                        name:  element.name,
+                        desc: element.desc,
+                        img: element.img,
+                        price: element.price,
+                        cant: element.cant
+                    }
+                    this.prodComprados.push(prodComprado)
+                });
+
+                this.setOrder({...this.order, entregado: false, monto: this.totalPagar, products: this.prodComprados})
                 
                 //Se crea una nueva orden
                 axios.post('https://api-vegan-eat.herokuapp.com/api/orders/create', this.order)

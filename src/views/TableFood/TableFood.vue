@@ -23,7 +23,12 @@
             <div class="col-12">
                 <v-btn dark color="error" @click="abrirFormCreate()">agregar</v-btn>
             </div>
-            <p>{{cartel}}</p>
+            <v-snackbar color="success" centered :timeout="3000" v-model="snackbar"> 
+                <div class="text-center">
+                {{cartel}}
+                <v-icon class="ml-2">mdi-check</v-icon>
+                </div>
+            </v-snackbar>
             
             <v-dialog v-model="stateCRUD" persistent :width="width">
                 <v-card class="col-lg-12">
@@ -101,6 +106,7 @@
                 title: '',
                 cartel: '',
                 loading: true,
+                snackbar: false,
 
                 disableName: false,
                 disableDesc:false,
@@ -120,19 +126,19 @@
                 valid: true,
                 name: '',
                 nameRules: [
-                    v => !!v.trim() || 'El nombre requerido',
+                    v => !!v || 'El nombre requerido',
                     v => (v && v.length <= 50) || 'El nombre no debe tener mas de 30 caracteres',
                 ],
                 desc: '',
                 descRules: [
-                    v => !!v.trim() || 'Descripción requerida',
-                    v => (v.trim() && v.trim().length <= 250) || 'La descripción no debe tener mas de 50 caracteres',
+                    v => !!v || 'Descripción requerida',
+                    v => (v && v.length <= 250) || 'La descripción no debe tener mas de 50 caracteres',
                 ],
 
                 //se hardcodea
                 img: 'https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2Fflan%20de%20coco.jpg?alt=media&token=3b058e30-5c33-4ef4-9c25-61463df8371f',
                 imgRules: [
-                    v => !!v.trim() || 'Imagen requerida'
+                    v => !!v || 'Imagen requerida'
                 ],
 
                 price: '',
@@ -251,24 +257,31 @@
                 } 
             },
             ejecutar(action) {
-
                     const headers = {'x-access-token': this.token}
 
                     if(action === 'agregar') {
                         axios.post('https://api-vegan-eat.herokuapp.com/api/products/create', this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
+                            this.snackbar = true
                         })
                         .catch(error => {
-                            this.cartel = error.response.data.error})
-                    } else {
-                        if(action == 'modificar') {
-                        axios.put(`https://api-vegan-eat.herokuapp.com/api/products/update/${this.producto.id}`, this.producto, {headers: headers})
-                        .then((response) => {
-                            this.cartel = response.data
+                            this.cartel = error.response.data.error
+                            this.snackbar = true
                         })
-                        .catch((error) => {
-                            this.cartel = error.response.data.error})
+                    } else {
+                        if(action === 'modificar') {
+                            axios.put(`https://api-vegan-eat.herokuapp.com/api/products/update/${this.producto.id}`, this.producto, {headers: headers})
+                            .then((response) => {
+                                this.cartel = response.data
+                                this.snackbar = true
+                            })
+                            .catch((error) => {
+                                this.cartel = error.response.data.error
+                            })
+                            .finally(() => {
+                                this.snackbar = true
+                            })
                         } 
                         else {
                             axios.delete(`https://api-vegan-eat.herokuapp.com/api/products/delete/${this.producto.id}`, {headers: headers})
@@ -276,7 +289,11 @@
                                 this.cartel = response.data
                             })
                             .catch((error) => {
-                                this.cartel = error.response.data.error})
+                                this.cartel = error.response.data.error
+                            })
+                            .finally(() => {
+                                this.snackbar = true
+                            })
                         }  
                     }
 
@@ -284,6 +301,10 @@
                     this.value = true
                     this.stateCRUD = false,
                     this.stateConfirm = false
+
+                    setTimeout(()=>{
+                        this.snackbar = false
+                    }, 5000)
             },
 
             limpiar() {

@@ -61,15 +61,30 @@
         <v-btn color="#4E9F3D" dark @click="cancelar()" class="mt-2 btn-back">Volver</v-btn>
       </div>
     </v-form>
+
+    <v-snackbar color="success" centered :timeout="3000" v-model="snackbar">
+      <div class="welcome mt-1">
+        <div class="welcome-title">VeganEAT!</div>
+        <v-icon class="ml-1">mdi-food-apple</v-icon>
+      </div>
+      <v-divider class="mb-4"></v-divider>
+        
+      <div class="text-center" v-if="user">
+        Hola! {{user.name}} , Muchas gracias por unirte!<br>
+        Pasa y mira nuestras comidas ya!
+      </div>
+    </v-snackbar>
+
   </v-container>
 </template>
 
 <script>
     import axios from 'axios'
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     export default {
         data() {
             return {
+              snackbar: false,
               errorCartel: '', 
               dialog: true,
 
@@ -79,6 +94,7 @@
               name: '',
               nameRules: [
                 v => !!v || 'Nombre requerido',
+                v => !/\s/.test(v) || 'Nombre sin espacios',
                 v => (v && v.length <= 15) || 'No mas de 15 caracteres' 
               ],
 
@@ -91,18 +107,23 @@
               nickname: '',
               nicknameRules: [
                   v => !!v || 'Nickname requerido',
+                  v => !/\s/.test(v) || 'Nickname sin espacios',
                   v => (v && v.length <= 15) || 'No mas de 15 caracteres'
               ],
 
               email: '',
               emailRules: [
                   v => !!v || 'E-mail requerido',
-                  v => /.+@.+\..+/.test(v) || 'E-mail no valido'
+                  //v => /.+@.+\..+/.test(v) || 'E-mail no valido'
+                  v => !/\s/.test(v) || 'Email sin espacios',
+                  v => /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(v) || 'E-mail no valido'
+
               ],
 
               password: '',
               passwordRules: [
                   v => !!v || 'Contraseña requerida',
+                  v => !/\s/.test(v) || 'Constraseña sin espacios',
                   v=> /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/.test(v) || 'Password no valida'],
           }
         },
@@ -129,7 +150,11 @@
                   localStorage.setItem('token', response.data.data.token)
                   localStorage.setItem('user', JSON.stringify(response.data.data.user))
 
-                  this.$router.push('/')
+                  this.snackbar = true
+                  setTimeout(() => {
+                    this.snackbar = false
+                    this.$router.push('/')
+                  }, 5000)
                 })
                 .catch((error) => {
                   console.log(error.response.data.error)
@@ -146,7 +171,8 @@
         computed: {
           error() {
             return this.errorCartel
-          }
+          },
+          ...mapGetters('usuario', ['user'])
         }
     }
 </script>
@@ -165,6 +191,16 @@
 
     .btn-reg, .btn-back {
       width: 100%;
+    }
+
+    .welcome {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      font-size: 160%;
+    }
+    .welcome-title {
+        font-family: 'Architects Daughter', cursive;
     }
 
 </style>

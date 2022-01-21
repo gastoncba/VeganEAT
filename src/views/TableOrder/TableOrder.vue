@@ -5,7 +5,7 @@
 
         </v-progress-linear>
 
-        <v-data-table v-else :headers="cabeceras" :items="orders">
+        <v-data-table v-else :headers="cabecerasOrden" :items="orders">
 
             <template v-slot:item.calle="{item}">
                 <td>
@@ -43,9 +43,28 @@
                 </td>
             </template>
 
+            <template v-slot:item.foods="{item}">
+                <td>
+                    <v-btn
+                    dark
+                    color="purple"
+                    rounded
+                    small
+                    @click="verProductos(item)"
+                    >
+                    ver
+                    </v-btn>
+                </td>
+            </template>
+
         </v-data-table>
 
-        <p v-show="stateCartel">{{cartel}}</p>
+        <v-snackbar color="success" centered :timeout="3000" v-model="snackbar">
+            <div class="text-center">
+                {{cartel}}
+                <v-icon class="ml-2">mdi-check</v-icon>
+            </div>
+        </v-snackbar>
 
 
         <v-dialog v-model="dialogState" persistent max-width="290">
@@ -70,6 +89,16 @@
             </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="productsDialog">
+            <v-card>
+                <h2 class="text-center prod-order-title">Comidas del Pedido</h2>
+                <v-data-table :headers="cabecerasProductos" :items="products">
+
+                </v-data-table>
+            </v-card>
+        </v-dialog>
+
     </v-container>
 </template>
 
@@ -86,9 +115,11 @@
                 orderID: '',
                 dialogState: false,
                 loading: true,
-                stateCartel: true,
+                snackbar: false,
+                productsDialog: false,
+                products: [],
                 orders: [],
-                cabeceras: [
+                cabecerasOrden: [
                     {
                         text: 'Cuidad',
                         value: 'address1.cuidad',
@@ -115,10 +146,32 @@
                         sortable:  false
                     },
                     {
+                        text: 'Comidas',
+                        value: 'foods',
+                        sortable: false
+                    },
+                    {
                         text: 'Eliminar',
                         value:  'delete',
                         sortable:  false
                     },
+                ],
+                cabecerasProductos: [
+                    {
+                        text:'Nombre',
+                        value: 'name',
+                        sortable: false,
+                    },
+                    {
+                        text: 'Precio',
+                        value: 'price',
+                        sortable:false
+                    },
+                    {
+                        text:'Cantidad', 
+                        value: 'cant',
+                        sortable: false
+                    }
                 ]
             }
         },
@@ -170,41 +223,47 @@
                     newState.state = true
                 }
 
+                this.dialogState = false
+
                 axios.patch(`https://api-vegan-eat.herokuapp.com/api/orders/update-state/${this.orderID}`, newState)
                 .then((response)=>{
-                    this.stateCartel = true
                     this.cartel = response.data
                 })
                 .catch((error)=>{
                     console.log(error.response.data.error)
-                    this.stateCartel = true
                     this.cartel = 'a ocurrido un error...'
                 })
-
-                this.dialogState = false
-
-                setTimeout(()=>{
-                    this.stateCartel = false
-                }, 5000)
+                .finally(()=>{
+                    this.snackbar = true
+                    setTimeout(()=> {
+                        this.snackbar = false
+                    }, 5000)
+                })
             }, 
 
             eliminar() {
+
+                this.dialogState = false
+
                 axios.delete(`https://api-vegan-eat.herokuapp.com/api/orders/delete/${this.orderID}`)
                 .then((response) => {
-                    this.stateCartel = true
                     this.cartel = response.data
                 })
                 .catch((error) => {
                     console.log(error.response.data.error)
-                    this.stateCartel = true
                     this.cartel = 'error al intentar borrar..'
                 })
+                .finally(()=> {
+                    this.snackbar = true
+                    setTimeout(()=>{
+                        this.snackbar = false
+                    }, 5000)
+                })
+            }, 
 
-                this.dialogState = false
-
-                setTimeout(()=>{
-                    this.stateCartel = false
-                }, 5000)
+            verProductos(order) {
+                this.products = order.products
+                this.productsDialog = true
             }
         },
 
@@ -226,10 +285,16 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Fredoka+One&display=swap');
-    
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
     h1 {
         font-family: 'Fredoka One', cursive;
         font-size: 2em;
+    }
+
+    .prod-order-title {
+        font-family: 'Architects Daughter', cursive;
+        font-size: 150%; 
     }
 
 </style>

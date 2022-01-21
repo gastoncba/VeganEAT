@@ -184,12 +184,12 @@
                     transition: 0.2s ease all;
                 }  
             } 
-            // &.not-empty {
-            //     animated-label {
-            //         top: 0;
-            //         font-size: 12px;
-            //     }
-            // }
+            &.not-empty {
+                animated-label {
+                    top: 0;
+                    font-size: 12px;
+                }
+            }
             
             .form-control {
                 width: 100%;
