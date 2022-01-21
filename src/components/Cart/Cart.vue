@@ -27,15 +27,15 @@
     export default {
         
         computed: {
-            ...mapGetters('carrito', ['carrito']),
+            ...mapGetters('carrito', ['carrito', 'total']),
 
-            total() {
-                const total = this.carrito.reduce((sumaTotal, prod) => {
-                    return (prod.cant*prod.price) + sumaTotal
-                    }, 0)
+            // total() {
+            //     const total = this.carrito.reduce((sumaTotal, prod) => {
+            //         return (prod.cant*prod.price) + sumaTotal
+            //         }, 0)
 
-                return total
-            }
+            //     return total
+            // }
         },
 
         components: {

@@ -55,6 +55,13 @@
             }
         },
 
+        props: {
+            totalPagar: {
+                type: Number,
+                default: 1 
+            },
+        },
+
         methods: {
             siguiente(step) {
                 this.step = step
@@ -75,19 +82,24 @@
                 if(this.order.tiempoEntrega !== 'Ahora') this.msgEntrega = `su pedido estara a las ${this.order.tiempoEntrega} hs`
                 
                 this.cartelAcept = true
-                this.setOrder({...this.order, entregado: false})
-                
+                this.setOrder({...this.order, entregado: false, pago: this.totalPagar})
+                console.log(this.order)
+                setTimeout(()=>{
+                        this.cartelAcept = false
+                        this.limpiarCarrito()
+                        this.$router.push('/')
+                }, 6000)
                 //Se crea una nueva orden
-                axios.post('https://api-vegan-eat.herokuapp.com/api/orders/create', this.order)
-                .then((response) => {
-                    this.setOrder({...this.order, id: response.data.order._id})
-                    this.actualizarStock()
-                    this.asociarUsuario()
+                // axios.post('https://api-vegan-eat.herokuapp.com/api/orders/create', this.order)
+                // .then((response) => {
+                //     this.setOrder({...this.order, id: response.data.order._id})
+                //     this.actualizarStock()
+                //     this.asociarUsuario()
                     
-                })
-                .catch((error)=>{
-                    console.log(error.response.data.error)
-                })
+                // })
+                // .catch((error)=>{
+                //     console.log(error.response.data.error)
+                // })
             }, 
 
             actualizarStock() {

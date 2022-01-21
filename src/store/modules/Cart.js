@@ -20,5 +20,11 @@ export default {
     getters: {
         carrito: (state) => state.carrito,
         cantCarrito: (state) => state.carrito.length,
+        total: (state) => {
+            const total = state.carrito.reduce((sumaTotal, prod) => {
+                return (prod.cant*prod.price) + sumaTotal
+            }, 0)
+            return total
+        }
     }
 }

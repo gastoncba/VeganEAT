@@ -2,7 +2,7 @@
     <v-container class="mt-12">
         <v-row>
             <v-col order="2" lg="6" md="6" cols="12" sm="6">
-                <StepOrder />
+                <StepOrder :totalPagar="calcularTotal()"/>
             </v-col>
 
             <v-col order="1" lg="6" md="6" cols="12" sm="6">
@@ -13,17 +13,17 @@
                     </div>
                     <div class="row mt-2">
                         <p><b>Total por productos:</b></p>
-                        <p>$100</p>
+                        <p>${{total|truncar}}</p>
                     </div>
                     <v-divider></v-divider>
                     <div class="row mt-2">
                         <p><b>Envio:</b></p>
-                        <p>$50</p>
+                        <p>${{envio}}</p>
                     </div>
                     <v-divider></v-divider>
                     <div class="row row--total mt-2">
                         <p><b>Total:</b></p>
-                        <p>$150</p>
+                        <p>${{calcularTotal()|truncar}}</p>
                     </div>
                     </v-card-text>
                 </v-card>
@@ -33,11 +33,30 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     import StepOrder from '../../components/StepOrder/StepOrder.vue'
     export default {
+        data() {
+            return {
+                envio: 50
+            }
+        },
+        methods: {
+            calcularTotal() {
+                return this.total + this.envio
+            }
+        },
+        computed: {
+            ...mapGetters('carrito', ['total']),
+        },
         components: {
             StepOrder,
         },
+        filters: {
+            truncar(value) {
+                return Math.floor(value*10)/10
+            }
+        }
     }
 </script>
 
