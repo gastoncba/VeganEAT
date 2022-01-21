@@ -57,6 +57,12 @@
                         </v-col>
                     </v-row>
 
+                    <v-snackbar color="red" centered :timeout="3000" v-model="snackbar">
+                        <div class="text-center">
+                            tarjeta vencida
+                        </div>
+                    </v-snackbar>
+
                     <div class="my-4">
                         <v-btn dark style="width:100%;" @click="validarTarjeta()">Validar Tarjeta</v-btn>
                     </div>
@@ -75,6 +81,7 @@
 
         data() {
             return {
+                snackbar: false,
                 valid: true,
                 loadingCard: false,
                 disabledForm: false,
@@ -122,17 +129,26 @@
                     this.loadingCard = true
                     this.validado = true
                     this.procesarPago()
-                    setTimeout(() => {
-                        this.cerrar()
-                        this.validado = false
-                    }, 2000)
                 }
             }, 
 
             procesarPago() {
+                
+                const vencimiento = new Date(this.year, this.month-1)
+                const dateCurrent = new Date()
+
+                console.log('fecha actual: ', dateCurrent)
+                console.log('fecha de venc: ', vencimiento)
+
                 setTimeout(() => {
                     this.loadingCard = false
                     this.disabledForm = false
+                    if(!(dateCurrent >= vencimiento)) {
+                        this.cerrar()
+                    } else {
+                        this.snackbar = true
+                    }
+                    this.validado = false
                 }, 5000)
             }
         },
