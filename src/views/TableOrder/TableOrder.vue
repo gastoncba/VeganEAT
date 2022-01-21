@@ -8,22 +8,22 @@
         <v-data-table v-else :headers="cabeceras" :items="orders">
             <template v-slot:item.entregado="{item}">
                 <td>
-                    <v-chip v-if="item.entregado" color="green" dark @click="abrirDialog(true)">
+                    <v-chip v-if="item.entregado" color="green" dark @click="abrirDialog(item)">
                         entregada
                         <v-icon class="ml-1">mdi-check</v-icon>
                     </v-chip>
-                    <v-chip v-else color="red" dark @click="abrirDialog(false)">
+                    <v-chip v-else color="red" dark @click="abrirDialog(item)">
                         pendiente
                         <v-icon class="ml-1">mdi-close-circle</v-icon>
                     </v-chip>
                 </td>
             </template>
             
-            <template v-slot:item.delete>
+            <template v-slot:item.delete="{item}">
                 <td>
                     <v-icon
                     small
-                    @click="deleteMod()"
+                    @click="deleteMod(item)"
                     >
                     mdi-delete
                     </v-icon>
@@ -31,6 +31,8 @@
                 
             </template>
         </v-data-table>
+
+        <p v-show="stateCartel">{{cartel}}</p>
 
 
         <v-dialog v-model="dialogState" persistent max-width="290">
@@ -64,11 +66,14 @@
 
         data() {
             return {
+                cartel: '',
                 text: '',
                 action: '',
                 orderState: false,
+                orderID: '',
                 dialogState: false,
                 loading: true,
+                stateCartel: true,
                 orders: [],
                 cabeceras: [
                     {
@@ -116,22 +121,24 @@
                     console.log(e)
                 })
             }, 
-            abrirDialog(entregado) {
+            abrirDialog(order) {
 
                 this.dialogState = true
-                this.orderState = entregado
+                this.orderState = order.entregado
+                this.orderID = order._id
                 this.action = 'Modificar'
-                if(entregado) {
+                if(this.orderState) {
                     this.text = 'poner a la orden como pendiente'
                 } else {
                     this.text = 'poner a la orden como entregada'
                 }
             },
 
-            deleteMod() {
+            deleteMod(order) {
                 this.dialogState = true
                 this.action = 'Eliminar'
                 this.text = 'eliminar la orden'
+                this.orderID = order._id
             },
 
             ejecutar() {
@@ -143,20 +150,57 @@
             },
 
             pasarDeEstado(state) {
+                const newState = { }
                 if(state) {
-                    console.log('esta entregada, pasar como pendiente')
+                    newState.state = false
                 } else {
-                    console.log('esta pendiente, pasar como entregada')
+                    newState.state = true
                 }
+
+                axios.patch(`https://api-vegan-eat.herokuapp.com/api/orders/update-state/${this.orderID}`, newState)
+                .then((response)=>{
+                    this.stateCartel = true
+                    this.cartel = response.data
+                })
+                .catch((error)=>{
+                    console.log(error.response.data.error)
+                    this.stateCartel = true
+                    this.cartel = 'a ocurrido un error...'
+                })
+
+                this.dialogState = false
+
+                setTimeout(()=>{
+                    this.stateCartel = false
+                }, 5000)
             }, 
 
             eliminar() {
-                console.log('eliminada')
+                axios.delete(`https://api-vegan-eat.herokuapp.com/api/orders/delete/${this.orderID}`)
+                .then((response) => {
+                    this.stateCartel = true
+                    this.cartel = response.data
+                })
+                .catch((error) => {
+                    console.log(error.response.data.error)
+                    this.stateCartel = true
+                    this.cartel = 'error al intentar borrar..'
+                })
+
+                this.dialogState = false
+
+                setTimeout(()=>{
+                    this.stateCartel = false
+                }, 5000)
             }
         },
 
         mounted () {
             this.getOrders()
+        },
+
+        updated () {
+            this.getOrders();
         },
     }
 </script>

@@ -76,20 +76,48 @@
                 
                 this.cartelAcept = true
                 this.setOrder({...this.order, entregado: false})
-
+                
+                //Se crea una nueva orden
                 axios.post('https://api-vegan-eat.herokuapp.com/api/orders/create', this.order)
                 .then((response) => {
-                    console.log(response.data)
-                    setTimeout(()=>{
-                        this.cartelAcept = false
-                        this.limpiarCarrito()
-                        this.$router.push('/')
-                    }, 6000)
+                    this.setOrder({...this.order, id: response.data.order._id})
+                    this.actualizarStock()
+                    this.asociarUsuario()
+                    
                 })
                 .catch((error)=>{
                     console.log(error.response.data.error)
                 })
             }, 
+
+            actualizarStock() {
+                //se actualiza el stock de los productos
+                this.carrito.forEach(item => {
+                
+                    const newStock = {stock: item.stock - item.cant}
+
+                    axios.patch(`https://api-vegan-eat.herokuapp.com/api/products/update-stock/${item._id}`, newStock)
+                    .then((response) => {
+                        console.log(response.data)
+                        setTimeout(()=>{
+                            this.cartelAcept = false
+                            this.limpiarCarrito()
+                            this.$router.push('/')
+                        }, 6000)
+                    })
+                    .catch((error) => console.log(error.response.data.error))
+                })
+            },
+
+            asociarUsuario() {
+                //se verfica si existe una cuenta abierta
+                if(this.user) {
+                    const newOrder = {orderID: this.order.id}
+                    axios.patch(`https://api-vegan-eat.herokuapp.com/api/users/add-order/${this.user._id}`, newOrder)
+                    .then((response) => console.log(response.data))
+                    .catch((error) => console.log(error.response.data.error))
+                }
+            },
 
             ...mapActions('carrito', ['setCart']),
             ...mapActions('orden', ['setOrder'])
@@ -100,7 +128,9 @@
         },
 
         computed: {
-            ...mapGetters('orden', ['order'])
+            ...mapGetters('orden', ['order']),
+            ...mapGetters('carrito', ['carrito']),
+            ...mapGetters('usuario', ['user'])
         },
     }
 </script>

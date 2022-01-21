@@ -42,6 +42,18 @@ const routes = [
     name: 'AdminOrders',
     component: () => import('../views/TableOrder/TableOrder.vue'),
     meta: {esProtegida: true}
+  },
+  {
+    path: '/admin-users',
+    name: 'AdminUsers',
+    component: () => import('../views/TableUser/TableUser.vue'),
+    meta: {esProtegida: true}
+  },
+  {
+    path: '/:id/pedidos',
+    name: 'OrdersUser',
+    component: () => import('../views/OrderUser/OrderUser.vue'),
+    meta: {esProtegida: true}
   }
 ]
 

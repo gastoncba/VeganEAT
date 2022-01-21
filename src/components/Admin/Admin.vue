@@ -48,7 +48,7 @@
 
                                             <v-card-actions>
                                                 <router-link 
-                                                to="/"
+                                                to="/admin-users"
                                                 v-if="item.title == 'Usuarios'" 
                                                 style="text-decoration: none;"
                                                 >

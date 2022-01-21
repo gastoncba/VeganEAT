@@ -141,7 +141,7 @@
                 this.$router.push('/')
             },
 
-            ...mapActions('orden', ['setToken','setUser'])
+            ...mapActions('usuario', ['setToken','setUser'])
         },
         computed: {
           error() {
