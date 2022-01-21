@@ -42,6 +42,7 @@
             }
         },
         methods: {
+
             calcularTotal() {
                 return this.total + this.envio
             }
@@ -56,7 +57,7 @@
             truncar(value) {
                 return Math.floor(value*10)/10
             }
-        }
+        },
     }
 </script>
 

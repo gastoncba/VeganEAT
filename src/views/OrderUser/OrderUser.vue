@@ -4,6 +4,19 @@
 
         </v-progress-linear>
         <v-data-table v-else :headers="cabeceras" :items="orders">
+
+            <template v-slot:item.calle="{item}">
+                <td>
+                    {{item.address1.calle}} {{item.address1.nroCalle}}
+                </td>
+            </template>
+
+            <template v-slot:item.monto="{item}">
+                <td>
+                    ${{item.monto|truncar}}
+                </td>
+            </template>
+
             <template v-slot:item.entregado="{item}">
                 <td>
                     <v-chip v-if="item.entregado" color="green" dark>
@@ -34,13 +47,8 @@
                         sortable: false
                     }, 
                     {
-                        text: 'Calle',
-                        value: 'address1.calle',
-                        sortable: false
-                    },
-                    {
-                        text: 'Número de calle',
-                        value: 'address1.nroCalle',
+                        text: 'Calle y Número',
+                        value: 'calle',
                         sortable: false
                     },
                     {
@@ -48,6 +56,11 @@
                         value: 'telefono',
                         sortable: false
                     }, 
+                    {
+                        text: 'Monto',
+                        value: 'monto',
+                        sortable: false
+                    },
                     {
                         text: 'Estado',
                         value:  'entregado',
@@ -67,6 +80,12 @@
                 .catch((error) => {
                     console.log(error)
                 })
+            }
+        },
+
+        filters: {
+            truncar(value) {
+                return Math.floor(value*10)/10
             }
         },
 

@@ -2,19 +2,28 @@ export default {
     namespaced: true,
     
     state: {
-        carrito: []
+        carrito: [],
+        stateCart: true,
     }, 
 
     mutations: {
         SET_CART(state, payload) {
             state.carrito = payload
         },
+
+        SET_STATE_CART(state, payload) {
+            state.stateCart = payload
+        }
     }, 
 
     actions: {
         setCart({commit}, payload) {
             commit('SET_CART', payload)
         },
+
+        setStateCart({commit}, payload) {
+            commit('SET_STATE_CART', payload)
+        }
     },
 
     getters: {
@@ -25,6 +34,13 @@ export default {
                 return (prod.cant*prod.price) + sumaTotal
             }, 0)
             return total
-        }
+        },
+        prodPorCantidad: (state) => {
+            const cantProd = state.carrito.reduce((sumaTotal, prod) => {
+                return prod.cant + sumaTotal
+            }, 0)
+            return cantProd
+        },
+        stateCart: (state) => state.stateCart
     }
 }

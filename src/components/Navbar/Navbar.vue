@@ -18,7 +18,7 @@
 
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }"> 
-          <v-btn icon v-bind="attrs" v-on="on" @click="cartView = !cartView">
+          <v-btn icon v-bind="attrs" v-on="on" @click="cartView = !cartView" v-show="stateCart">
             <v-icon v-if="estaVacio()">mdi-cart</v-icon>
             <v-badge v-else :content="prodPorCantidad" color="deep-purple">
               <v-icon>mdi-cart</v-icon>
@@ -193,15 +193,10 @@
     },
 
     computed: {
-      ...mapGetters('carrito', ['cantCarrito', 'carrito']),
+      ...mapGetters('carrito', ['cantCarrito', 'carrito', 'stateCart', 'prodPorCantidad']),
       ...mapGetters('usuario', ['user']),
 
-      prodPorCantidad() {
-        const cantProd = this.carrito.reduce((sumaTotal, prod) => {
-          return prod.cant + sumaTotal
-          }, 0)
-        return cantProd
-      }
+      
     },
   }
 </script>

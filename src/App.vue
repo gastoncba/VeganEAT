@@ -18,7 +18,7 @@
 
     methods: {
       ...mapActions(['setProducts']),
-      ...mapActions('carrito', ['setCart']),
+      ...mapActions('carrito', ['setCart', 'setStateCart']),
       ...mapActions('usuario', ['setUser', 'setToken']),
 
       leerToken() {
@@ -62,9 +62,15 @@
     watch: {
       carrito() {
         localStorage.setItem('cart', JSON.stringify(this.carrito))
+      },
+      $route() {
+        if(this.$route.path === '/order') {
+          this.setStateCart(false)
+        } else {
+          this.setStateCart(true)
+        }
       }
     },
-
   }
 </script>
 
