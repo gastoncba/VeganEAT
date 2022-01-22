@@ -15,7 +15,7 @@
       height="200px"
       width="100%"
     >
-      <div class="container-alert" v-if="!getStock(product)">
+      <div class="container-alert" v-if="!getStock">
         <div class="container-alert--triangle">
           <div class="container-alert--text">
             <p>Sin Stock</p>
@@ -40,7 +40,7 @@
               small
               right
               absolute
-              :disabled="!getStock(product)"
+              :disabled="!getStock"
               @click="agregarAlCarrito(product)"
             >
             <v-icon>mdi-cart</v-icon>
@@ -72,7 +72,21 @@
         $ • {{product.price}} ARS
       </div>
 
-      <ItemCount :stock="getStock(product)" @aumentar="tomarCantidad($event)" @disminuir="tomarCantidad($event)" :initial="cant"/>
+      <div>
+        <div class="mt-1 grey--text" style="font-size: 16px;">
+            Cantidad: {{cant}}
+        </div>
+
+        <div class="mt-1">
+            <v-btn x-small icon @click="aumentar()" :disabled="!getStock">
+                <v-icon size="27">mdi-plus-circle</v-icon>
+            </v-btn>
+
+            <v-btn x-small icon @click="disminuir()" :disabled="!getStock">
+                <v-icon size="27" class="ml-4">mdi-minus-circle</v-icon>
+            </v-btn>
+        </div>
+      </div>
 
     </v-card-text>
     <v-card-actions>
@@ -82,14 +96,13 @@
     </v-card-actions>
   </v-card>
 
-  <ProductDetail :dialog="detail" @volver='cerrar()' :product="product" :stock="getStock(product)"/>
+  <ProductDetail :dialog="detail" @volver='cerrar()' :product="product" :stock="getStock"/>
   </v-container>
 </template>
 
 <script>
     import {mapGetters, mapActions} from 'vuex'
     import ProductDetail from '../ProductDetail/ProductDetail.vue'
-    import ItemCount from '../ItemCount/ItemCount.vue'
     export default {
 
         data() {
@@ -106,17 +119,20 @@
               default: () => {} 
             },
         },
-        methods: { 
+        methods: {
+          aumentar() {
+            if(this.cant < this.getStock) this.cant += 1
+          }, 
+
+          disminuir() {
+            if(this.cant != 1) this.cant -= 1
+          },
+
           verInfo() {
             this.detail = true; 
           },
           cerrar() {
             this.detail = false
-          }, 
-
-          getStock(prod) {
-            const prodInCart =  this.carrito.find(item => item._id === prod._id);
-            return prodInCart ? (prod.stock - prodInCart.cant) : prod.stock;
           }, 
 
           tomarCantidad(value) {
@@ -151,11 +167,16 @@
 
 
         computed: {
+          getStock() {
+            const prodInCart =  this.carrito.find(item => item._id === this.product._id);
+            return prodInCart ? (this.product.stock - prodInCart.cant) : this.product.stock;
+          },
+          
           ...mapGetters('carrito', ['carrito'])
         },
 
         components: {
-          ProductDetail, ItemCount
+          ProductDetail
         },
     }
 </script>
