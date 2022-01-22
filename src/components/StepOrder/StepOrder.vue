@@ -81,8 +81,6 @@
                 this.siguiente(step)
 
                 if(this.order.tiempoEntrega !== 'Ahora') this.msgEntrega = `su pedido estara a las ${this.order.tiempoEntrega} hs`
-                
-                this.cartelAcept = true
 
                 this.carrito.forEach(element => {
                     const prodComprado = {
@@ -103,7 +101,6 @@
                     this.setOrder({...this.order, id: response.data.order._id})
                     this.actualizarStock()
                     this.asociarUsuario()
-                    
                 })
                 .catch((error)=>{
                     console.log(error.response.data.error)
@@ -115,16 +112,11 @@
                 this.carrito.forEach(item => {
                 
                     const newStock = {stock: item.stock - item.cant}
-                    console.log(newStock)
-
+                    
                     axios.patch(`https://api-vegan-eat.herokuapp.com/api/products/update-stock/${item._id}`, newStock)
                     .then((response) => {
                         console.log(response.data)
-                        setTimeout(()=>{
-                            this.cartelAcept = false
-                            this.limpiarCarrito()
-                            this.$router.push('/')
-                        }, 6000)
+                        this.getProducts()
                     })
                     .catch((error) => console.log(error.response.data.error))
                 })
@@ -140,8 +132,23 @@
                 }
             },
 
+            getProducts() {
+                axios.get('https://api-vegan-eat.herokuapp.com/api/products')
+                .then((response) =>  {
+                    this.setProducts(response.data)
+                    this.cartelAcept = true
+                    setTimeout(()=> {
+                        this.cartelAcept = false
+                        this.limpiarCarrito()
+                        this.$router.push('/')
+                    }, 6000)
+                })
+                .catch((error) => console.log(`error: ${error}`))
+            }, 
+
             ...mapActions('carrito', ['setCart']),
-            ...mapActions('orden', ['setOrder'])
+            ...mapActions('orden', ['setOrder']),
+            ...mapActions(['setProducts'])
         },
 
         components: {
@@ -151,7 +158,8 @@
         computed: {
             ...mapGetters('orden', ['order']),
             ...mapGetters('carrito', ['carrito']),
-            ...mapGetters('usuario', ['user'])
+            ...mapGetters('usuario', ['user']),
+            ...mapGetters(['products'])
         },
     }
 </script>

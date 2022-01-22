@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import usuario from '../store/modules/User'
+import carrito from '../store/modules/Cart'
 
 Vue.use(VueRouter)
 
@@ -29,7 +30,8 @@ const routes = [
   {
     path: '/order',
     name: 'Order', 
-    component: () => import('../views/Order/Order.vue')
+    component: () => import('../views/Order/Order.vue'),
+    meta: {isOrder: true}
   },
   {
     path: '/admin-foods',
@@ -66,8 +68,16 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const protegida = to.matched.some(item => item.meta.esProtegida)
 
+  const isOrder = to.matched.some(item => item.meta.isOrder)
+
   if(protegida && usuario.state.token === null) {
     next({name: 'Login'})
+  } else {
+    next()
+  }
+
+  if(isOrder && carrito.state.carrito.length === 0) {
+    next({name: 'Main'})
   } else {
     next()
   }

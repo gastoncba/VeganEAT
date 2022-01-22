@@ -366,7 +366,6 @@
 
         mounted () {
             this.getProducts();
-            console.log('montado..')
         },
     }
 </script>
