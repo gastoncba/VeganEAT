@@ -94,7 +94,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import axios from 'axios'
     import Confirm from '../../components/Confirm/Confirm.vue'
     export default {
@@ -182,11 +182,14 @@
         },
 
         methods: {
+            ...mapActions(['setProducts']),
+
             getProducts() {
                 axios.get('https://api-vegan-eat.herokuapp.com/api/products')
                 .then((response) => {
                     this.products = response.data 
                     this.loading = false
+                    this.setProducts(response.data) //para que se actualice con la otra vista
                     
                 })
                 .catch((error) => console.log(`error: ${error}`))
@@ -263,10 +266,12 @@
                         axios.post('https://api-vegan-eat.herokuapp.com/api/products/create', this.producto, {headers: headers})
                         .then((response) => {
                             this.cartel = response.data
-                            this.snackbar = true
+                            this.getProducts()
                         })
                         .catch(error => {
                             this.cartel = error.response.data.error
+                        })
+                        .finally(() => {
                             this.snackbar = true
                         })
                     } else {
@@ -274,7 +279,7 @@
                             axios.put(`https://api-vegan-eat.herokuapp.com/api/products/update/${this.producto.id}`, this.producto, {headers: headers})
                             .then((response) => {
                                 this.cartel = response.data
-                                this.snackbar = true
+                                this.getProducts()
                             })
                             .catch((error) => {
                                 this.cartel = error.response.data.error
@@ -287,6 +292,7 @@
                             axios.delete(`https://api-vegan-eat.herokuapp.com/api/products/delete/${this.producto.id}`, {headers: headers})
                             .then((response) => {
                                 this.cartel = response.data
+                                this.getProducts()
                             })
                             .catch((error) => {
                                 this.cartel = error.response.data.error
@@ -360,10 +366,8 @@
 
         mounted () {
             this.getProducts();
+            console.log('montado..')
         },
-        updated() {
-            this.getProducts()
-        }
     }
 </script>
 

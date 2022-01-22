@@ -1,11 +1,9 @@
 <template>
-    <div>
+    <div class="mt-4">
         <v-row>
             <v-col lg="6" sm="12" md="12" cols="12" class="d-flex justify-center">
                 <v-card>
-                    <v-card-title>
-                        Panel de Comidas
-                    </v-card-title>
+                    <h2 class="text-center title-foods">Comidas</h2>
                     <v-img
                         src="https://images.unsplash.com/photo-1520072959219-c595dc870360?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=990&q=80"    
                         class="white--text align-end"
@@ -29,10 +27,8 @@
 
             <v-col lg="6" sm="12" md="12" cols="12">
                 <v-card>
-                    <v-card-title>
-                        Panel de usuarios y pedidos
-                    </v-card-title>
-
+                    <h2 class="text-center title-users-orders">Usuarios y Pedidos</h2>
+                
                     <v-spacer></v-spacer>
 
                     <v-container>
@@ -116,5 +112,9 @@
 </script>
 
 <style scoped>
-
+    @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+    
+    .title-foods, .title-users-orders {
+        font-family: 'Architects Daughter', cursive;
+    }
 </style>

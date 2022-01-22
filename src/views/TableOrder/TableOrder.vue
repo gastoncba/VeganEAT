@@ -228,6 +228,7 @@
                 axios.patch(`https://api-vegan-eat.herokuapp.com/api/orders/update-state/${this.orderID}`, newState)
                 .then((response)=>{
                     this.cartel = response.data
+                    this.getOrders()
                 })
                 .catch((error)=>{
                     console.log(error.response.data.error)
@@ -242,12 +243,12 @@
             }, 
 
             eliminar() {
-
                 this.dialogState = false
 
                 axios.delete(`https://api-vegan-eat.herokuapp.com/api/orders/delete/${this.orderID}`)
                 .then((response) => {
                     this.cartel = response.data
+                    this.getOrders()
                 })
                 .catch((error) => {
                     console.log(error.response.data.error)
@@ -275,11 +276,7 @@
 
         mounted () {
             this.getOrders()
-        },
-
-        updated () {
-            this.getOrders();
-        },
+        }
     }
 </script>
 

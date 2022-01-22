@@ -115,6 +115,7 @@
                 this.carrito.forEach(item => {
                 
                     const newStock = {stock: item.stock - item.cant}
+                    console.log(newStock)
 
                     axios.patch(`https://api-vegan-eat.herokuapp.com/api/products/update-stock/${item._id}`, newStock)
                     .then((response) => {

@@ -1,6 +1,6 @@
 <template>
     <div class="mt-12" v-if="user">
-        <h1 class="text-center">Buenos días {{user.nickname}}!</h1>
+        <h1 class="text-center title-profile">Buenos días {{user.nickname}}!</h1>
 
         <!--aca se hace un condicional para verificar los roles del usuario
         por el momento aca se lo hace por nickname pero despues se va a cambiar--->
@@ -26,5 +26,10 @@
 </script>
 
 <style scoped>
+    @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+    
+    .title-profile {
+        font-family: 'Architects Daughter', cursive;
+    }
 
 </style>

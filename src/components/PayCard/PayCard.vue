@@ -107,7 +107,7 @@
                 yearRules: [
                     v => !!v || 'Año requerido'
                 ],
-                years: ['2022', '2023', '2024', '2025', '2026']
+                years: ['2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030']
             }
         },
 
@@ -136,9 +136,6 @@
                 
                 const vencimiento = new Date(this.year, this.month-1)
                 const dateCurrent = new Date()
-
-                console.log('fecha actual: ', dateCurrent)
-                console.log('fecha de venc: ', vencimiento)
 
                 setTimeout(() => {
                     this.loadingCard = false

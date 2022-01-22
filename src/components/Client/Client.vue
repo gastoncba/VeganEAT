@@ -1,11 +1,9 @@
 <template>
-    <div>   
+    <div class="mt-4">   
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title>
-                        Tus pedidos y promociones
-                    </v-card-title>
+                    <h2 class="text-center title-client">Tus pedidos y promociones</h2>
 
                     <v-spacer></v-spacer>
 
@@ -92,5 +90,9 @@
 </script>
 
 <style scoped>
+    @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 
+    .title-client {
+        font-family: 'Architects Daughter', cursive;
+    }
 </style>
