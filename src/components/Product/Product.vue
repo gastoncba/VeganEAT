@@ -72,7 +72,7 @@
         $ • {{product.price}} ARS
       </div>
 
-      <ItemCount :stock="getStock(product)" @aumentar="tomarCantidad($event)" @disminuir="tomarCantidad($event)"/>
+      <ItemCount :stock="getStock(product)" @aumentar="tomarCantidad($event)" @disminuir="tomarCantidad($event)" :initial="cant"/>
 
     </v-card-text>
     <v-card-actions>
@@ -138,6 +138,8 @@
             }
 
             this.snackbar = true
+            this.cant = 1
+            console.log(this.cant)
           },
 
           prodInCart(prodSelect) {

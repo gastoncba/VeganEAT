@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="mt-1 grey--text" style="font-size: 16px;">
-            Cantidad: {{cant}}
+            Cantidad: {{initial}}
         </div>
 
         <div class="mt-1">
@@ -20,7 +20,7 @@
     export default {
         data() {
             return {
-                cant: 1
+                cant: this.initial
             }
         },
 
@@ -29,12 +29,16 @@
                 type: Number,
                 default: 1 
             },
+            initial: {
+                type: Number,
+                default: 1
+            }
         },
 
         methods: {
             aumentar() {
                 if(this.cant < this.stock) this.cant += 1
-
+                console.log(this.initial)
                 this.$emit('aumentar', this.cant)
             }, 
 
