@@ -33,7 +33,7 @@
             </div>
             <v-divider></v-divider>
             <div class="text-center mt-4">
-                Muchas Gracias su compra!!<br>
+                Muchas Gracias por su compra!!<br>
                 {{msgEntrega}}
             </div>
         </v-snackbar>

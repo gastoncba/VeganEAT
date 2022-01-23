@@ -5,7 +5,7 @@ Vegan EAT! es una aplicación web que permite a las personas realizar la compra 
 
 ## Desarrollo
 Para el desarrollo de este sitio web, se hicieron uso de las siguientes tecnologías.<br>
-Para el desarrollo frontend se utilizó el framework Vue.js, la librería Vuetify, y de la funcionalidad autocomplete de Google.
+Para el desarrollo frontend se utilizó el framework Vue.js, la librería Vuetify, y la funcionalidad autocomplete de Google.
 
 * Vue.js: https://vuejs.org/
 * Vuetify: https://vuetifyjs.com/en/
