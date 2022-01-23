@@ -5,6 +5,19 @@
 
         </v-progress-linear>
         <v-data-table :items="products" :headers="cabeceras" v-else>
+                <template v-slot:item.points="{item}">
+                    <td>
+                        <v-rating
+                        :value="item.points"
+                        color="amber"
+                        dense
+                        half-increments
+                        readonly
+                        size="14"
+                        >   
+                        </v-rating>
+                    </td>
+                </template>
                 <template v-slot:item.delete="{ item }">
                     <td>
                         <v-btn icon @click="abrirFormDelete(item)">
@@ -175,6 +188,11 @@
                         {
                             text: "Nombre",
                             value: "name",
+                            sortable: false
+                        },
+                        {
+                            text: 'Puntaje', 
+                            value: 'points', 
                             sortable: false
                         },
                         {
