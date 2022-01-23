@@ -29,7 +29,11 @@
           type="password"
           required
         ></v-text-field>
-    <small>usuario: administrador y password: 123456</small>
+
+        <div class="text-center" style="font-size: 15px;">
+          <small>usuario: administrador y password: 123456</small><br>
+          <small>usuario común: nico10 y password: Nicolas10#</small> 
+        </div>
     <p class="alert">{{error}}</p>
 
     <v-container style="position:relative;">
