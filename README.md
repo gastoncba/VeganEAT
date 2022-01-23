@@ -11,7 +11,8 @@ Para el desarrollo frontend se utilizó el framework Vue.js, la librería Vuetif
 * Vuetify: https://vuetifyjs.com/en/
 * vue-google-autocomplete: https://www.npmjs.com/package/vue-google-autocomplete
 
-En cuanto a la parte backend se implementó una API REST desarrollada en Node.js. 
+En cuanto a la parte backend se implementó una API REST desarrollada en Node.js.<br>
+Para la persistencia de los datos se hace uso del sistema de bases de datos NoSQL MongoBD 
 
 * API Vegan EAT!: https://github.com/gastoncba/API-VEGAN-EAT
 
