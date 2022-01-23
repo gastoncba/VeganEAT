@@ -54,7 +54,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="4.5"
+          :value="product.points"
           color="amber"
           dense
           half-increments
@@ -63,7 +63,7 @@
         ></v-rating>
 
         <div class="grey--text ms-4">
-          4.5 (413)
+          {{product.points}}
         </div>
 
       </v-row>

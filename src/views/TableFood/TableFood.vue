@@ -77,6 +77,17 @@
                     :disabled="disableStock"
                     ></v-text-field>
 
+                    <v-text-field
+                    v-model.number="points"
+                    :rules="pointsRules"
+                    label="Puntaje"
+                    required
+                    :disabled="disablePoints"
+                    hint="puntaje menor o igual a 5"
+                    >
+
+                    </v-text-field>
+
                     <v-btn color="green" @click="aceptar()" dark class="mt-4">
                         {{action}}
                     </v-btn>
@@ -113,6 +124,7 @@
                 disablePrice:false,
                 disableStock:false,
                 disableImg: false,
+                disablePoints: false,
                 
                 producto: {
                     id: '',
@@ -121,6 +133,7 @@
                     img: this.img,
                     price: this.price,
                     stock: this.stock,
+                    points: this.points
                 },
                 
                 valid: true,
@@ -144,10 +157,17 @@
                 price: '',
                 priceRules:[
                     v => (!Number.isNaN(v*1)) || 'Ingrese un precio',
+                    v => (!(v <= 0)) || 'Ingrese un valor positivo'
                 ],
                 stock: '',
                 stockRules: [
                     v => (!!Number.isInteger(v))|| 'Debe ser número entero',
+                    v => (!(v <= 0)) || 'Ingrese un valor positivo'
+                ],
+                points: '',
+                pointsRules: [
+                    v => (!Number.isNaN(v*1)) || 'Ingrese un número',
+                    v => (!(v > 5.0 || v < 1.0)) || 'Ingrese un valor entre 1 y 5'
                 ],
                 
                 products: [],
@@ -216,6 +236,7 @@
                 this.img = item.img
                 this.price = item.price
                 this.stock = item.stock
+                this.points = item.points
 
                 this.producto.id = item._id
             },
@@ -232,6 +253,7 @@
                 this.img = item.img
                 this.price = item.price
                 this.stock = item.stock
+                this.points = item.points
                 
                 this.deshabilitarCampos()
 
@@ -252,9 +274,7 @@
                     this.producto.img = this.img
                     this.producto.price = this.price
                     this.producto.stock = this.stock
-                    
-                    if(this.producto.price < 0) this.producto.price *=-1
-                    if(this.producto.stock < 0) this.producto.stock *=-1
+                    this.producto.points = this.points
                     
                     this.stateConfirm = true
                 } 
@@ -319,6 +339,7 @@
                 this.img = 'https://firebasestorage.googleapis.com/v0/b/delivery-things.appspot.com/o/img_productos_veganEAT%2Fflan%20de%20coco.jpg?alt=media&token=3b058e30-5c33-4ef4-9c25-61463df8371f'
                 this.price = ''
                 this.stock = ''
+                this.points = ''
             },
 
             habilitarCampos() {
@@ -327,6 +348,7 @@
                 this.disablePrice = false
                 this.disableStock = false
                 this.disableImg = false
+                this.disablePoints = false
             },
 
             deshabilitarCampos() {
@@ -335,6 +357,7 @@
                 this.disablePrice = true
                 this.disableStock = true
                 this.disableImg = true
+                this.disablePoints = true 
             },
 
         }, 
