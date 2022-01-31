@@ -32,11 +32,6 @@
 
     <p class="alert">{{error}}</p>
 
-    <div class="text-center" style="font-size: 15px;">
-      <small>usuario: administrador y password: 123456</small><br>
-      <small>usuario común: nico10 y password: Nicolas10#</small> 
-    </div>
-
     <v-container style="position:relative;">
     <div>
       <v-btn color="#4E9F3D" dark class="mt-2 btn-login" @click="iniciarSesion()" :disabled="buttonsState">Iniciar Sesion</v-btn>
