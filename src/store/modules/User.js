@@ -29,5 +29,6 @@ export default {
     getters: {
         user: (state) => state.user,
         token: (state) => state.token,
+        nickname: (state) => state.user.nickname
     }
 }

@@ -57,7 +57,6 @@
       this.tomarCarrito()
       this.leerToken()
       this.leerUsuario()
-      console.log('montado app..')
     },
 
     watch: {

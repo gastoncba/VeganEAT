@@ -9,12 +9,12 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login/Login.vue')
+    component: () => import('../views/Login/Login.vue'),
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register/Register.vue')
+    component: () => import('../views/Register/Register.vue'),
   }, 
   {
     path: '/', 
@@ -82,5 +82,4 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-
 export default router

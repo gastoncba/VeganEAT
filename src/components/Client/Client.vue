@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4">   
+    <v-container class="mt-4" fluid>   
         <v-row>
             <v-col>
                 <v-card>
@@ -7,7 +7,7 @@
 
                     <v-spacer></v-spacer>
 
-                    <v-container>
+                    <v-container fluid>
                         <v-row>
                             <v-col v-for="(item,i) in items" :key="i" lg="6" sm="12" md="12" cols="12">
                                 <v-card dark :color="item.color">
@@ -51,7 +51,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    </div>
+    </v-container>
 </template>
 
 <script>

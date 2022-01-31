@@ -55,7 +55,7 @@
             <v-list-item-title class="ml-1">Cerrar Sesion</v-list-item-title>
           </v-list-item>
 
-          <router-link to="/register" style="color: white; text-decoration: none">
+          <router-link to="/register" style="color: white; text-decoration: none" v-if="!user">
           <v-list-item>
             <v-icon>mdi-account-plus</v-icon>
             <v-list-item-title class="ml-1">Registrarse</v-list-item-title>
@@ -98,6 +98,15 @@
                           <v-icon>mdi-account</v-icon>
                           perfil
                         </div>
+                    </v-list-item>
+                    </router-link>
+
+                    <router-link v-if="esAdmin()" to="/admin-foods" style="color: white; text-decoration: none">
+                    <v-list-item>
+                      <div class="ml-6">
+                        <v-icon>mdi-food</v-icon>
+                        comidas
+                      </div>
                     </v-list-item>
                     </router-link>
                     
@@ -189,12 +198,18 @@
 
       }, 
 
+      esAdmin() {
+        if(this.user && this.nickname === 'administrador') return true
+
+        return false
+      },
+
       ...mapActions('usuario', ['setToken','setUser'])
     },
 
     computed: {
       ...mapGetters('carrito', ['cantCarrito', 'carrito', 'stateCart', 'prodPorCantidad']),
-      ...mapGetters('usuario', ['user']),
+      ...mapGetters('usuario', ['user','nickname']),
 
       
     },

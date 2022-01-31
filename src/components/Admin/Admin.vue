@@ -1,31 +1,7 @@
 <template>
-    <div class="mt-4">
+    <v-container class="mt-4" fluid>
         <v-row>
-            <v-col lg="6" sm="12" md="12" cols="12" class="d-flex justify-center">
-                <v-card>
-                    <h2 class="text-center title-foods">Comidas</h2>
-                    <v-img
-                        src="https://images.unsplash.com/photo-1520072959219-c595dc870360?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=990&q=80"    
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                        height="230px"
-                    >
-                    <v-card-title>Comidas disponibles</v-card-title>
-                    </v-img>
-                    <v-card-actions>
-                        <router-link to="/admin-foods" style="text-decoration: none">
-                        <v-btn outlined
-                                rounded
-                                small
-                        >
-                        ir al panel
-                        </v-btn>
-                        </router-link>
-                    </v-card-actions>
-                </v-card>
-            </v-col> 
-
-            <v-col lg="6" sm="12" md="12" cols="12">
+            <v-col>
                 <v-card>
                     <h2 class="text-center title-users-orders">Usuarios y Pedidos</h2>
                 
@@ -33,7 +9,7 @@
 
                     <v-container>
                         <v-row>
-                            <v-col cols="12" v-for="(item,i) in items" :key="i">
+                            <v-col v-for="(item,i) in items" :key="i" lg="6" sm="12" md="12" cols="12">
                                 <v-card dark :color="item.color">
                                     <div class="d-flex flex-no-wrap justify-space-between">
                                         <div>
@@ -85,7 +61,7 @@
                 </v-card>
             </v-col>
         </v-row>
-    </div>
+    </v-container>
 </template>
 
 <script>
